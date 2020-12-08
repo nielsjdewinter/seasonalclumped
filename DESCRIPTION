@@ -1,0 +1,15 @@
+Package: seasonalclumped
+Title: Toolbox for seasonal temperature reconstructions using clumped isotope analyses
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Niels",
+           family = "de Winter",
+           role = c("aut", "cre"),
+           email = "niels_de_winter@live.nl",
+           comment = c(ORCID = "0000-0002-1453-5407"))
+Description: Compiles a set of functions and dummy data that simplify reconstructions of seasonal temperature variability in the geological past from stable isotope and clumped isotope records in sub-annually resolved carbonate archives (e.g. mollusk shells, corals and speleothems).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
