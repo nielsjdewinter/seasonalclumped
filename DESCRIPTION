@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "niels_de_winter@live.nl",
            comment = c(ORCID = "0000-0002-1453-5407"))
-Description: Compiles a set of functions and dummy data that simplify reconstructions of seasonal temperature variability in the geological past from stable isotope and clumped isotope records in sub-annually resolved carbonate archives (e.g. mollusk shells, corals and speleothems).
+Description: Compiles a set of functions and dummy data that simplify reconstructions of seasonal temperature variability in the geological past from stable isotope and clumped isotope records in sub-annually resolved carbonate archives (e.g. mollusk shells, corals and speleothems). For more information, see de Winter et al., 2020 (Climate of the Past Discussions, https://doi.org/10.5194/cp-2020-118).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
