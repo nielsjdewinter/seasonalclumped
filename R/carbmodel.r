@@ -84,21 +84,21 @@
 #' Amp <- 10 # Set seasonal amplitude
 #' Sext <- 2 * Amp # Calculate extent of seasonal variability
 #' TSD <- 1.5 # Set the degree of random non-seasonal noise on the SST curve
-#' ("weather")
+#' # ("weather")
 #' SST <- rnorm(length(Ty), MAT + Amp * sin(2 * pi * Ty), TSD) # Create virtual
-#' daily SST data
+#' # daily SST data
 #' GR <- rep(10 / 365, length(Ty)) # Set growth rate to 10 mm/yr and create daily
-#' GR vector
+#' # GR vector
 #' DSD <- 0.6 # Set the degree of random non-seasonal noise on the d18Osw curve
-#' ("salinity fluctuations")
+#' # ("salinity fluctuations")
 #' d18Osw<-rnorm(length(Ty), rep(0, length(Ty)), DSD) # Set d18Osw to 0 permille
-#' VSMOW, create daily d18Osw vector
+#' # VSMOW, create daily d18Osw vector
 #' SR <- 0.75 # Set sampling resolution to 0.75 mm
 #' # Create vector for all samples along entire shell length by applying constant
-#' sampling resolution
-#' D<-seq(SR[i], sum(GR), SR)
+#' # sampling resolution
+#' D <- seq(SR, sum(GR), SR)
 #' # Calculate virtual data
-#' newdata<-shellmodel(Ty, SST, GR, d18Osw, D, AV=TRUE)
+#' newdata <- carbmodel(Ty, SST, GR, d18Osw, D, AV = TRUE)
 #' @export
 carbmodel<-function(time,
     SST,
@@ -138,8 +138,10 @@ carbmodel<-function(time,
     }
     if(plot == TRUE){ # Create plots of new data if requested
         plot(D, d18Oc, col = "blue")
+        lines(D, d18Oc, col = "blue")
         par(new = TRUE)
         plot(D, D47, axes = FALSE, bty = "n", xlab = "", ylab = "", col = "red")
+        lines(D, D47, bty = "n", xlab = "", ylab = "", col = "red")
         axis(side = 4, at = pretty(range(D47)))
     }
     dat<-cbind(Tnew, D, d18Oc, D47) # Combine new data for export
