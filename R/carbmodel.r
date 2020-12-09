@@ -110,16 +110,10 @@ carbmodel<-function(time,
     AV=FALSE,
     plot=FALSE
     ){
-    Dday<-cumsum(GR) # Create vector linking days to depth values
-    if(AV==FALSE){
-        SSTnew <- subsample(SST, Dday, D) # Subsample SST along the new sample set
-        d18Ownew <- subsample(d18Ow, Dday, D) # Subsample d18Ow along the new sample set
-        Tnew <- subsample(Ty, Dday, D) # Subsample time (yr) along the new sample set
-    }else{
-        SSTnew <- subsample_mean(SST, Dday, D) # Subsample SST along the new sample set using mean values
-        d18Ownew <- subsample_mean(d18Ow, Dday, D) # Subsample d18Ow along the new sample set using mean values
-        Tnew <- subsample_mean(Ty, Dday, D) # Subsample time (yr) along the new sample set using mean values
-    }
+    D_cum <- cumsum(GR) # Create vector linking days to depth values
+    SSTnew <- subsample(SST, D_cum, D, AV = AV) # Subsample SST along the new sample set, using mean values if AV = TRUE
+    d18Ownew <- subsample(d18Ow, D_cum, D, AV = AV) # Subsample d18Ow along the new sample set, using mean values if AV = TRUE
+    Tnew <- subsample(Ty, D_cum, D, AV = AV) # Subsample time (yr) along the new sample set, using mean values if AV = TRUE
     if(d18O_fun == "KimONeil97"){
         alpha = exp((18.03 * 1000 / (SSTnew + 273.15) - 33.42) / 1000) # Calculate alpha of calcite fractionation
         d18Ow_PDB = (0.97002 * d18Ownew - 29.98) # Convert d18Ow to PDB (following Brand et al., 2014)

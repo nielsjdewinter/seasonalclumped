@@ -1,6 +1,6 @@
 Package: seasonalclumped
 Title: Toolbox for seasonal temperature reconstructions using clumped isotope analyses
-Version: 0.0.1.9000
+Version: 0.0.2.9000
 Authors@R: 
     person(given = "Niels",
            family = "de Winter",
