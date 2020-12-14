@@ -1,9 +1,17 @@
 #' Function for sample size optimization-based clumped isotope seasonality
-#' reconstruction. See de Winter et al., 2020 (Climate of the Past) for detailed
-#' information
+#' reconstruction.
+#' 
+#' Combines records of stable oxygen isotope ratios (d18Oc) and
+#' clumped isotope ratios (D47) through sub-annually resolved carbonate archives
+#' (e.g. mollusk shells or corals) to reconstruct monthly variability in
+#' temperature and salinity (through the d18O composition of the precipitation
+#' fluid), using the sample size optimization method detailed in de Winter et
+#' al., 2020 (Climate of the Past).
+#'
 #' @param d18Oc Vector containing sub-annually resolved d18Oc data 
 #' @param D47 Vector containing sub-annually resolved D47 data
-#' @param ages Vector containing ages for of all samples in years relative to the shell chronology
+#' @param ages Vector containing ages for of all samples in years relative to
+#' the shell chronology
 #' @param SD_d18OC Error on the d18Oc measurements. Either a single value
 #' (constant uncertainty) or a vector of length equal to the period in SST data 
 #' (365 days by default) containing information about the error of each 
@@ -88,7 +96,7 @@
 #'     1000,
 #'     0.05,
 #'     "KimONeil97",
-#'     "Bernasconi18",,
+#'     "Bernasconi18",
 #'     FALSE}
 #' @export
 optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
@@ -106,7 +114,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     # Prepare data
     # Check if data has equal length
     if(length(unique(c(length(d18Oc), length(D47), length(ages)))) > 1){
-        return("ERROR: Vectors 'd18Oc', 'D47' and 'ages' need to have equal length")
+        return("ERROR: Vectors 'd18Oc', 'D47' and 'ages' should have equal length")
     }
     Popt <- matrix(NA, ncol = 5, nrow = N * length(d18Oc)) # Create matrix with maximum length
     colnames(Popt) <- c("Samplesize",
@@ -200,7 +208,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         month = ceiling((ages %% 1) * 12) # Use age data to group results into monthly bins
     )
 
-    # Calculate monthly statistics of all d18Oc values for the month
+    # Calculate monthly statistics of all d18Oc values
     cat("Grouping d18Oc data into monthly bins: ", "\r")
     d18Oc_monthly <- data.frame(d18Oc_mean = vapply(1:12, function(x) mean(resultmat$d18Oc[which(resultmat$month == x)]), 1),
         d18Oc_median = vapply(1:12, function(x) median(resultmat$d18Oc[which(resultmat$month == x)]), 1),
@@ -208,7 +216,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     )
     d18Oc_monthly$d18Oc_SE <- d18Oc_monthly$d18Oc_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
 
-    # Calculate monthly statistics of all D47 values for the month using the d18Oc measurements and the D47-d18Oc slopes of all successful simulations
+    # Calculate monthly statistics of all D47 values using the d18Oc measurements and the D47-d18Oc slopes of all successful simulations
     cat("Grouping D47 data into monthly bins: ", "\r")
     D47_monthly <- data.frame(D47_mean = vapply(1:12, function(x) mean(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1),
         D47_median = vapply(1:12, function(x) median(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1),
