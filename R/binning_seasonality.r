@@ -21,8 +21,6 @@
 #' (365 days by default) containing information about the error of each 
 #' datapoint (1 standard deviation; default = 0.04 permille).
 #' @param N Number of datapoints for Monte Carlo simulation (defailts to 1000)
-#' @param p Threshold value for the p-value of separating summer from winter
-#' reconstructions. Defaults to 0.05 (95% confidence level)
 #' @param d18O_fun String containing the name of the transfer function used to
 #' convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
 #' or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
@@ -32,8 +30,7 @@
 #' @param export Export table summary of result (CSV format)? \code{TRUE/FALSE}
 #' @return A data frame containing monthly reconstructions of D47, temperature,
 #' d18O of the precipitation fluid and d18Oc.
-#' @references package dependencies: TTR
-#' Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
+#' @references Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 #' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59-74.
 #'     \url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
 #' Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
@@ -96,7 +93,6 @@
 #'     0.1,
 #'     0.04,
 #'     1000,
-#'     0.05,
 #'     "KimONeil97",
 #'     "Bernasconi18",
 #'     FALSE)
@@ -108,7 +104,6 @@ binning_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     SD_d18Oc = 0.1, # Error (1 SD) on d18Oc data 
     SD_D47 = 0.04, # Error (1 SD) on D47 data 
     N = 1000, # Number of Monte Carlo simulations for binning
-    p = 0.05, # p-value threshold for considering successful separation of seasons
     d18O_fun = "KimONeil97",
     D47_fun = "Bernasconi18",
     export = FALSE # Should the result be exported? 

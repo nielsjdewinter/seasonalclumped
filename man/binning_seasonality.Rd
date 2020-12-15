@@ -12,7 +12,6 @@ binning_seasonality(
   SD_d18Oc = 0.1,
   SD_D47 = 0.04,
   N = 1000,
-  p = 0.05,
   d18O_fun = "KimONeil97",
   D47_fun = "Bernasconi18",
   export = FALSE
@@ -32,9 +31,6 @@ the shell chronology}
 datapoint (1 standard deviation; default = 0.04 permille).}
 
 \item{N}{Number of datapoints for Monte Carlo simulation (defailts to 1000)}
-
-\item{p}{Threshold value for the p-value of separating summer from winter
-reconstructions. Defaults to 0.05 (95\% confidence level)}
 
 \item{d18O_fun}{String containing the name of the transfer function used to
 convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
@@ -80,14 +76,12 @@ al., 2020 (Climate of the Past).
     0.1,
     0.04,
     1000,
-    0.05,
     "KimONeil97",
     "Bernasconi18",
     FALSE)
     }
 }
 \references{
-package dependencies: TTR
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 aragonite: temperature effects, \emph{Chemical Geology} \strong{1986}, \emph{59.1}, 59-74.
 \url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
