@@ -115,7 +115,7 @@ carbmodel<-function(time,
     d18Ownew <- subsample(d18Ow, D_cum, D, AV = AV) # Subsample d18Ow along the new sample set, using mean values if AV = TRUE
     Tnew <- subsample(Ty, D_cum, D, AV = AV) # Subsample time (yr) along the new sample set, using mean values if AV = TRUE
     if(d18O_fun == "KimONeil97"){
-        alpha = exp((18.03 * 1000 / (SSTnew + 273.15) - 33.42) / 1000) # Calculate alpha of calcite fractionation
+        alpha = exp((18.03 * 1000 / (SSTnew + 273.15) - 32.42) / 1000) # Calculate alpha of calcite fractionation
         d18Ow_PDB = (0.97002 * d18Ownew - 29.98) # Convert d18Ow to PDB (following Brand et al., 2014)
         d18Oc = ((alpha * (d18Ow_PDB / 1000 + 1)) - 1) * 1000 # Calculate d18O of calcite for each sample according to Kim and O'Neil, 1997
     }else if(d18O_fun == "GrossmanKu86"){

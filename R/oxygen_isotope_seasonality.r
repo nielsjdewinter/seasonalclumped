@@ -19,10 +19,10 @@
 #' @param d18O_fun String containing the name of the transfer function used to
 #' convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
 #' or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
+#' @param export Export table summary of result (CSV format)? \code{TRUE/FALSE}
 #' @return A data frame containing monthly reconstructions of temperature,
 #' d18O of the precipitation fluid and d18Oc.
-#' @references package dependencies: tidyverse, TTR
-#' Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
+#' @references Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 #' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59-74.
 #'     \url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
 #' Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
@@ -51,13 +51,16 @@
 #'     monthly <- optimization_seasonality(d18Oc,
 #'     ages,
 #'     0.1,
-#'     "KimONeil97"}
+#'     "KimONeil97",
+#'     FALSE)
+#'     }
 #' @export
 optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
     ages, # Vector containing ages for of all samples in years relative to the shell chronology
     SD_d18Oc = 0.1, # Error (1 SD) on d18Oc data 
     d18Ow = 0, # Vector containing d18O values of the precipitation fluid.
-    d18O_fun = "KimONeil97"
+    d18O_fun = "KimONeil97",
+    export = FALSE # Should the result be exported? 
     ){
     
     # Prepare data

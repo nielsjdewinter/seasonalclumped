@@ -29,11 +29,12 @@
 #' @param D47_fun String containing the name of the transfer function used to
 #' convert temperature to D47 data (for example: \code{"Bernasconi18"} or
 #' \code{"Jautzy20"}). Defaults to Bernasconi et al., 2018).
+#' @param export Export table summary of result (CSV format)? \code{TRUE/FALSE}
 #' @param export_raw Export tables containing all raw model
 #' results before being merged into tidy tables? \code{TRUE/FALSE}
 #' @return A data frame containing monthly reconstructions of D47, temperature,
 #' d18O of the precipitation fluid and d18Oc.
-#' @references package dependencies: tidyverse, TTR
+#' @references package dependencies: TTR
 #' Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 #' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59-74.
 #'     \url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
@@ -85,8 +86,11 @@
 #'     # find attached dummy data
 #'     Case1 <- seasonalclumped:::Case1
 #'     d18Oc <- Case1[, 29]
+#'     d18Oc <- d18Oc[-which(is.na(d18Oc))]
 #'     D47 <- Case1[, 30]
+#'     D47 <- D47[-which(is.na(D47))]
 #'     ages <- Case1[, 27]
+#'     ages <- ages[-which(is.na(ages))]
 #'     # Run function
 #'     monthly <- optimization_seasonality(d18Oc,
 #'     D47,
@@ -97,7 +101,9 @@
 #'     0.05,
 #'     "KimONeil97",
 #'     "Bernasconi18",
-#'     FALSE}
+#'     FALSE,
+#'     FALSE)
+#'     }
 #' @export
 optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
     D47, # Sub-annually resolved D47 data
@@ -108,6 +114,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     p = 0.05, # p-value threshold for considering successful separation of seasons
     d18O_fun = "KimONeil97",
     D47_fun = "Bernasconi18",
+    export = FALSE, # Should the result be exported? 
     export_raw = FALSE # Should raw data of successful individual simulations be exported (WARNING: Files can get large!)
     ){
     
@@ -129,9 +136,9 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         SD_D47 <- rep(SD_D47, length(D47)) # Duplicate SD of D47 error through entire record length if only a single value is given (constant uncertainty)
     }
 
-    d18Omat <- as.data.frame(matrix(rep(rnorm(length(d18Oc), d18Oc, SD_d18Oc), N), ncol = N)) # Randomly resample d18O data using measurement uncertainty
+    d18Omat <- as.data.frame(matrix(rnorm(N * length(d18Oc), d18Oc, SD_d18Oc), ncol = N)) # Randomly resample d18O data using measurement uncertainty
     colnames(d18Omat) <- paste("Sim", seq(1, N, 1), sep = "")
-    D47mat <- as.data.frame(matrix(rep(rnorm(length(D47), D47, SD_D47), N), ncol = N)) # Randomly resample D47 data using measurement uncertainty
+    D47mat <- as.data.frame(matrix(rnorm(N * length(D47), D47, SD_D47), ncol = N)) # Randomly resample D47 data using measurement uncertainty
     colnames(D47mat) <- paste("Sim", seq(1, N, 1), sep = "")
 
     win <- seq(1, length(d18Oc), 1) # Create vector of sample size windows
@@ -161,13 +168,15 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         SDpool <- sqrt((Dsumsd ^ 2 + Dwinsd ^ 2) / 2) # Calculate pooled standard deviation for each window
         T <- (Dsum - Dwin) / (SDpool * sqrt(2 / win)) # Calculate two-sample T-value for each window (equal sample size, equal variance)
         Pval <- pt(T, win - 1) # Calculate p-value for each window
-        res<-cbind(win[which(Pval < p)],
-            dsum[which(Pval < p)],
-            dwin[which(Pval < p)],
-            Dsum[which(Pval < p)],
-            Dwin[which(Pval < p)]) # Combine results
-        Popt[row:(row + length(which(Pval < p)) - 1), ] <- res # Add results to running matrix of optimized simulations
-        row <- row + length(which(Pval < p)) - 1 # Increment row number for efficient data storage
+        if(length(which(Pval < p)) > 0){ # Only add rows to Popt if there are successful simulations
+            res<-cbind(win[which(Pval < p)],
+                dsum[which(Pval < p)],
+                dwin[which(Pval < p)],
+                Dsum[which(Pval < p)],
+                Dwin[which(Pval < p)]) # Combine results
+            Popt[row:(row + length(which(Pval < p)) - 1), ] <- res # Add results to running matrix of optimized simulations
+            row <- row + length(which(Pval < p)) # Increment row number for efficient data storage
+        }
     }
 
     # POST PROCESSING
@@ -179,21 +188,23 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         Popt$Tsum <- sqrt((0.0449 * 10 ^ 6) / (Popt$Dsum - 0.167)) - 273.15 # Calculate summer and winter temperatures for each successful simulation according to Kele et al., 2015 modified by Bernasconi et al., 2018
         Popt$Twin <- sqrt((0.0449 * 10 ^ 6) / (Popt$Dwin - 0.167)) - 273.15
     }else if(D47_fun == "Jautzy20"){
-        Popt$Tsum <- sqrt((0.0433 * 10 ^ 6) / (Popt$Dsum - 0.119 + 0.066)) - 273.15 # Calculate summer and inter temperatures for each successful simulation according to Jautzy et al., 2020 brought into 25 degrees CDES reference frame using 70-25 acid fractionation factor by Petersen et al., 2019
-        Popt$Twin <- sqrt((0.0433 * 10 ^ 6) / (Popt$Dwin - 0.119 + 0.066)) - 273.15
+        Popt$Tsum <- sqrt((0.0433 * 10 ^ 6) / (Popt$Dsum - 0.119 - 0.066)) - 273.15 # Calculate summer and inter temperatures for each successful simulation according to Jautzy et al., 2020 brought into 25 degrees CDES reference frame using 70-25 acid fractionation factor by Petersen et al., 2019
+        Popt$Twin <- sqrt((0.0433 * 10 ^ 6) / (Popt$Dwin - 0.119 - 0.066)) - 273.15
     }else{
         return("ERROR: Supplied D47 transfer function is not recognized")
     }
+
     # Add seawater d18O calculations of optimal runs
     if(d18O_fun == "KimONeil97"){
-        Popt$dOwsum <- (Popt$dOsum - (exp(((18.03 * 10 ^ 3) / (Popt$Tsum + 273.15) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92 # Calculate d18O of the precipitation fluid (dOw) for summer and winter simulations using Kim and O'Neil, 1997 with conversion to PDB (following Brand et al., 2014)
-        Popt$dOwwin <- (Popt$dOwin - (exp(((18.03 * 10 ^ 3) / (Popt$Twin + 273.15) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92
+        Popt$dOwsum <- ((Popt$dOsum / 1000 + 1) / exp(((18.03 * 10 ^ 3) / (Popt$Tsum + 273.15) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92 # Calculate d18O of the precipitation fluid (dOw) for summer and winter simulations using Kim and O'Neil, 1997 with conversion to PDB (following Brand et al., 2014)
+        Popt$dOwwin <- ((Popt$dOwin / 1000 + 1) / exp(((18.03 * 10 ^ 3) / (Popt$Twin + 273.15) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92
     }else if(d18O_fun == "GrossmanKu86"){
         Popt$dOwsum <- (Popt$Tsum - 20.6) / 4.34 + Popt$dOsum - 0.2 # Calculate d18O of the precipitation fluid (dOw) for summer and winter simulations using Grossmann and Ku (1986) modified by Dettmann et al. (1999)
         Popt$dOwwin <- (Popt$Twin - 20.6) / 4.34 + Popt$dOwin - 0.2
     }else{
         return("ERROR: Supplied d18Oc transfer function is not recognized")
     }
+
     # Add slopes and intercepts for D47-d18O conversion
     Popt$D_dO_slope <- (Popt$Dsum - Popt$Dwin) / (Popt$dOsum - Popt$dOwin)
     Popt$D_dO_int <- ((Popt$Dsum + Popt$Dwin) / 2) - Popt$D_dO_slope * ((Popt$dOsum + Popt$dOwin) / 2)
@@ -223,6 +234,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         D47_SD = vapply(1:12, function(x) sd(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1)
     )
     D47_monthly$D47_SE = D47_monthly$D47_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
+
     # Repeat for monthly temperature reconstructions by calculating temperatures for each combination before averaging
     cat("Grouping Temperature data into monthly bins: ", "\r")
     if(D47_fun == "Bernasconi18"){
@@ -231,36 +243,37 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
             T_SD = vapply(1:12, function(x) sd(sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 273.15), 1)
         )
     }else if(D47_fun == "Jautzy20"){
-        T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 273.15), 1),
-            T_median = vapply(1:12, function(x) median(sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 273.15), 1),
-            T_SD = vapply(1:12, function(x) sd(sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 273.15), 1)
+        T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 273.15), 1),
+            T_median = vapply(1:12, function(x) median(sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 273.15), 1),
+            T_SD = vapply(1:12, function(x) sd(sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 273.15), 1)
         )
     }
     T_monthly$T_SE = T_monthly$T_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
+
     # Repeat for monthly d18Ow reconstructions by calculating temperatures for each combination before averaging
     cat("Grouping d18Ow data into monthly bins: ", "\r")
     if(d18O_fun == "KimONeil97"){
         if(D47_fun == "Bernasconi18"){
-            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean((resultmat$d18Oc[which(resultmat$month == x)] - (exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92), 1),
-                d18Ow_median = vapply(1:12, function(x) median((resultmat$d18Oc[which(resultmat$month == x)] - (exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd((resultmat$d18Oc[which(resultmat$month == x)] - (exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92), 1)
+            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(((resultmat$d18Oc[which(resultmat$month == x)] / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_median = vapply(1:12, function(x) median(((resultmat$d18Oc[which(resultmat$month == x)] / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_SD = sqrt((vapply(1:12, function(x) sd(((resultmat$d18Oc[which(resultmat$month == x)] / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1)) ^ 2 + (1.03092 * d18Oc_monthly$d18Oc_SD) ^ 2) # Include MC simulated error on d18Oc in the analysis
             )
         }else if(D47_fun == "Jautzy20"){
-            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean((resultmat$d18Oc[which(resultmat$month == x)] - (exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92), 1),
-                d18Ow_median = vapply(1:12, function(x) median((resultmat$d18Oc[which(resultmat$month == x)] - (exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd((resultmat$d18Oc[which(resultmat$month == x)] - (exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 32.42) / 1000) - 1) * 1000) * 1.03092 + 30.92), 1)
+            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(((resultmat$d18Oc[which(resultmat$month == x)] / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_median = vapply(1:12, function(x) median(((resultmat$d18Oc[which(resultmat$month == x)] / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_SD = sqrt((vapply(1:12, function(x) sd(((resultmat$d18Oc[which(resultmat$month == x)] / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1)) ^ 2 + (1.03092 * d18Oc_monthly$d18Oc_SD) ^ 2) # Include MC simulated error on d18Oc in the analysis
             )
         }
     }else if(d18O_fun == "GrossmanKu86"){
         if(D47_fun == "Bernasconi18"){
             d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
                 d18Ow_median = vapply(1:12, function(x) median(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1)
+                d18Ow_SD = sqrt((vapply(1:12, function(x) sd(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1)) ^ 2 + d18Oc_monthly$d18Oc_SD ^ 2) # Include MC simulated error on d18Oc in the analysis
             )
         }else if(D47_fun == "Jautzy20"){
-            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
-                d18Ow_median = vapply(1:12, function(x) median(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 + 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1)
+            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
+                d18Ow_median = vapply(1:12, function(x) median(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
+                d18Ow_SD = sqrt((vapply(1:12, function(x) sd(resultmat$d18Oc[which(resultmat$month == x)] + ((sqrt((0.0433 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1)) ^ 2 + d18Oc_monthly$d18Oc_SD ^ 2) # Include MC simulated error on d18Oc in the analysis
             )
         }
     }
