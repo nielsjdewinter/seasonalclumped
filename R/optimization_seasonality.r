@@ -283,8 +283,11 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         D47_monthly,
         T_monthly,
         d18Ow_monthly)
+
     # Export results of monthly grouped data
-    write.csv(monthly, paste("Monthly_results.csv"))
+    if(export == TRUE){
+        write.csv(monthly, paste("Monthly_optimization_results.csv"))
+    }
 
     return(monthly)
     }

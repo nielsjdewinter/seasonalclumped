@@ -21,6 +21,8 @@
 #' (365 days by default) containing information about the error of each 
 #' datapoint (1 standard deviation; default = 0.04 permille).
 #' @param N Number of datapoints for Monte Carlo simulation (defailts to 1000)
+#' @param binsize Size of the bins in which records are subdivided. \code{month}
+#' and \code{season} (period of three months) is currently supported.
 #' @param d18O_fun String containing the name of the transfer function used to
 #' convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
 #' or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
@@ -87,12 +89,13 @@
 #'     ages <- Case1[, 27]
 #'     ages <- ages[-which(is.na(ages))]
 #'     # Run function
-#'     monthly <- binning_seasonality(d18Oc,
+#'     binned <- binning_seasonality(d18Oc,
 #'     D47,
 #'     ages,
 #'     0.1,
 #'     0.04,
 #'     1000,
+#'     "month",
 #'     "KimONeil97",
 #'     "Bernasconi18",
 #'     FALSE)
@@ -104,6 +107,7 @@ binning_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     SD_d18Oc = 0.1, # Error (1 SD) on d18Oc data 
     SD_D47 = 0.04, # Error (1 SD) on D47 data 
     N = 1000, # Number of Monte Carlo simulations for binning
+    binsize = "month",
     d18O_fun = "KimONeil97",
     D47_fun = "Bernasconi18",
     export = FALSE # Should the result be exported? 
@@ -126,93 +130,105 @@ binning_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     D47mat <- as.data.frame(matrix(rnorm(N * length(D47), D47, SD_D47), ncol = N)) # Randomly resample D47 data using measurement uncertainty
     colnames(D47mat) <- paste("Sim", seq(1, N, 1), sep = "")
 
-    # Use age model to group monthly D47, T and d18Osw
-    resultmat <- data.frame(d18Oc = d18Oc, # Group d18Oc, D47 and age data
-        D47 = D47,
-        month = ceiling((ages %% 1) * 12) # Use age data to group results into monthly bins
-    )
+    # Use age model to bin D47, T and d18Osw
+    if(binsize == "month"){
+        resultmat <- data.frame(d18Oc = d18Oc, # Group d18Oc, D47 and age data
+            D47 = D47,
+            bin = ceiling((ages %% 1) * 12) # Use age data to group results into binned bins
+        )
+        bins = 1:12
+    }else if(binsize == "season"){
+            resultmat <- data.frame(d18Oc = d18Oc, # Group d18Oc, D47 and age data
+            D47 = D47,
+            bin = ceiling((ages %% 1) * 4) # Use age data to group results into binned bins
+        )
+        bins = 1:4
+    }
 
-    # Calculate monthly statistics of all d18Oc values
-    cat("Grouping d18Oc data into monthly bins: ", "\r")
-    d18Oc_monthly <- data.frame(d18Oc_mean = vapply(1:12, function(x) mean(as.matrix(d18Omat[which(resultmat$month == x), ])), 1),
-        d18Oc_median = vapply(1:12, function(x) median(as.matrix(d18Omat[which(resultmat$month == x), ])), 1),
-        d18Oc_SD = vapply(1:12, function(x) sd(as.matrix(d18Omat[which(resultmat$month == x), ])), 1)
+    # Calculate binned statistics of all d18Oc values
+    cat("Grouping d18Oc data into binned bins: ", "\r")
+    d18Oc_binned <- data.frame(d18Oc_mean = vapply(bins, function(x) mean(as.matrix(d18Omat[which(resultmat$bin == x), ])), 1),
+        d18Oc_median = vapply(bins, function(x) median(as.matrix(d18Omat[which(resultmat$bin == x), ])), 1),
+        d18Oc_SD = vapply(bins, function(x) sd(as.matrix(d18Omat[which(resultmat$bin == x), ])), 1)
     )
-    d18Oc_monthly$d18Oc_SE <- d18Oc_monthly$d18Oc_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
+    d18Oc_binned$d18Oc_SE <- d18Oc_binned$d18Oc_SD / sqrt(vapply(bins, function(x) length(resultmat$d18Oc[which(resultmat$bin == x)]), 1))
 
-    # Calculate monthly statistics of all D47 values using the d18Oc measurements and the D47-d18Oc slopes of all successful simulations
-    cat("Grouping D47 data into monthly bins: ", "\r")
-    D47_monthly <- data.frame(D47_mean = vapply(1:12, function(x) mean(as.matrix(D47mat[which(resultmat$month == x), ])), 1),
-        D47_median = vapply(1:12, function(x) median(as.matrix(D47mat[which(resultmat$month == x), ])), 1),
-        D47_SD = vapply(1:12, function(x) sd(as.matrix(D47mat[which(resultmat$month == x), ])), 1)
+    # Calculate binned statistics of all D47 values using the d18Oc measurements and the D47-d18Oc slopes of all successful simulations
+    cat("Grouping D47 data into binned bins: ", "\r")
+    D47_binned <- data.frame(D47_mean = vapply(bins, function(x) mean(as.matrix(D47mat[which(resultmat$bin == x), ])), 1),
+        D47_median = vapply(bins, function(x) median(as.matrix(D47mat[which(resultmat$bin == x), ])), 1),
+        D47_SD = vapply(bins, function(x) sd(as.matrix(D47mat[which(resultmat$bin == x), ])), 1)
     )
-    D47_monthly$D47_SE <- D47_monthly$D47_SD / sqrt(vapply(1:12, function(x) length(resultmat$D47[which(resultmat$month == x)]), 1))
+    D47_binned$D47_SE <- D47_binned$D47_SD / sqrt(vapply(bins, function(x) length(resultmat$D47[which(resultmat$bin == x)]), 1))
     
-    # Repeat for monthly temperature reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping Temperature data into monthly bins: ", "\r")
+    # Repeat for binned temperature reconstructions by calculating temperatures for each combination before averaging
+    cat("Grouping Temperature data into binned bins: ", "\r")
     if(D47_fun == "Bernasconi18"){
-        T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 273.15), 1),
-            T_median = vapply(1:12, function(x) median(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 273.15), 1),
-            T_SD = vapply(1:12, function(x) sd(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 273.15), 1)
+        T_binned <- data.frame(T_mean = vapply(bins, function(x) mean(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15), 1),
+            T_median = vapply(bins, function(x) median(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15), 1),
+            T_SD = vapply(bins, function(x) sd(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15), 1)
         )
     }else if(D47_fun == "Jautzy20"){
-        T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 273.15), 1),
-            T_median = vapply(1:12, function(x) median(sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 273.15), 1),
-            T_SD = vapply(1:12, function(x) sd(sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 273.15), 1)
+        T_binned <- data.frame(T_mean = vapply(bins, function(x) mean(sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 273.15), 1),
+            T_median = vapply(bins, function(x) median(sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 273.15), 1),
+            T_SD = vapply(bins, function(x) sd(sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 273.15), 1)
         )
     }
-    T_monthly$T_SE = T_monthly$T_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
+    T_binned$T_SE = T_binned$T_SD / sqrt(vapply(bins, function(x) length(resultmat$d18Oc[which(resultmat$bin == x)]), 1))
 
     # Repeat also for the case where D47 is first binned and then converted to temperatures (not the correct solution)
     if(D47_fun == "Bernasconi18"){
-        Trev_monthly <- data.frame(T_mean = sqrt((0.0449 * 10 ^ 6) / (D47_monthly$D47_mean - 0.167)) - 273.15,
-            T_median = sqrt((0.0449 * 10 ^ 6) / (D47_monthly$D47_median - 0.167)) - 273.15,
-            T_SD = sqrt((0.0449 * 10 ^ 6) / (D47_monthly$D47_mean - 0.167)) - 273.15 - (sqrt((0.0449 * 10 ^ 6) / (D47_monthly$D47_mean + D47_monthly$D47_SD - 0.167)) - 273.15)
+        Trev_binned <- data.frame(T_mean = sqrt((0.0449 * 10 ^ 6) / (D47_binned$D47_mean - 0.167)) - 273.15,
+            T_median = sqrt((0.0449 * 10 ^ 6) / (D47_binned$D47_median - 0.167)) - 273.15,
+            T_SD = sqrt((0.0449 * 10 ^ 6) / (D47_binned$D47_mean - 0.167)) - 273.15 - (sqrt((0.0449 * 10 ^ 6) / (D47_binned$D47_mean + D47_binned$D47_SD - 0.167)) - 273.15)
         )
     }else if(D47_fun == "Jautzy20"){
-        Trev_monthly <- data.frame(T_mean = sqrt((0.0433 * 10 ^ 6) / (D47_monthly$D47_mean - 0.119 - 0.066)) - 273.15,
-            T_median = sqrt((0.0433 * 10 ^ 6) / (D47_monthly$D47_median - 0.119 - 0.066)) - 273.15,
-            T_SD = sqrt((0.0433 * 10 ^ 6) / (D47_monthly$D47_mean - 0.119 - 0.066)) - 273.15 - (sqrt((0.0433 * 10 ^ 6) / (D47_monthly$D47_mean + D47_monthly$D47_SD - 0.119 - 0.066)) - 273.15)
+        Trev_binned <- data.frame(T_mean = sqrt((0.0433 * 10 ^ 6) / (D47_binned$D47_mean - 0.119 - 0.066)) - 273.15,
+            T_median = sqrt((0.0433 * 10 ^ 6) / (D47_binned$D47_median - 0.119 - 0.066)) - 273.15,
+            T_SD = sqrt((0.0433 * 10 ^ 6) / (D47_binned$D47_mean - 0.119 - 0.066)) - 273.15 - (sqrt((0.0433 * 10 ^ 6) / (D47_binned$D47_mean + D47_binned$D47_SD - 0.119 - 0.066)) - 273.15)
         )
     }
-    Trev_monthly$T_SE = Trev_monthly$T_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
+    Trev_binned$T_SE = Trev_binned$T_SD / sqrt(vapply(bins, function(x) length(resultmat$d18Oc[which(resultmat$bin == x)]), 1))
 
-    # Repeat for monthly d18Ow reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping d18Ow data into monthly bins: ", "\r")
+    # Repeat for binned d18Ow reconstructions by calculating temperatures for each combination before averaging
+    cat("Grouping d18Ow data into binned bins: ", "\r")
     if(d18O_fun == "KimONeil97"){
         if(D47_fun == "Bernasconi18"){
-            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(((as.matrix(d18Omat[which(resultmat$month == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
-                d18Ow_median = vapply(1:12, function(x) median(((as.matrix(d18Omat[which(resultmat$month == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd(((as.matrix(d18Omat[which(resultmat$month == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1)
+            d18Ow_binned <- data.frame(d18Ow_mean = vapply(bins, function(x) mean(((as.matrix(d18Omat[which(resultmat$bin == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_median = vapply(bins, function(x) median(((as.matrix(d18Omat[which(resultmat$bin == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_SD = vapply(bins, function(x) sd(((as.matrix(d18Omat[which(resultmat$bin == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1)
             )
         }else if(D47_fun == "Jautzy20"){
-            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(((as.matrix(d18Omat[which(resultmat$month == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
-                d18Ow_median = vapply(1:12, function(x) median(((as.matrix(d18Omat[which(resultmat$month == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd(((as.matrix(d18Omat[which(resultmat$month == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1)
+            d18Ow_binned <- data.frame(d18Ow_mean = vapply(bins, function(x) mean(((as.matrix(d18Omat[which(resultmat$bin == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_median = vapply(bins, function(x) median(((as.matrix(d18Omat[which(resultmat$bin == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
+                d18Ow_SD = vapply(bins, function(x) sd(((as.matrix(d18Omat[which(resultmat$bin == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1)
             )
         }
     }else if(d18O_fun == "GrossmanKu86"){
         if(D47_fun == "Bernasconi18"){
-            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(as.matrix(d18Omat[which(resultmat$month == x), ]) + ((sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
-                d18Ow_median = vapply(1:12, function(x) median(as.matrix(d18Omat[which(resultmat$month == x), ]) + ((sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd(as.matrix(d18Omat[which(resultmat$month == x), ]) + ((sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1)
+            d18Ow_binned <- data.frame(d18Ow_mean = vapply(bins, function(x) mean(as.matrix(d18Omat[which(resultmat$bin == x), ]) + ((sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
+                d18Ow_median = vapply(bins, function(x) median(as.matrix(d18Omat[which(resultmat$bin == x), ]) + ((sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
+                d18Ow_SD = vapply(bins, function(x) sd(as.matrix(d18Omat[which(resultmat$bin == x), ]) + ((sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15) - 20.6) / 4.34 - 0.2), 1)
             )
         }else if(D47_fun == "Jautzy20"){
-            d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(as.matrix(d18Omat[which(resultmat$month == x), ]) + ((sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
-                d18Ow_median = vapply(1:12, function(x) median(as.matrix(d18Omat[which(resultmat$month == x), ]) + ((sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
-                d18Ow_SD = vapply(1:12, function(x) sd(as.matrix(d18Omat[which(resultmat$month == x), ]) + ((sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$month == x), ]) - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1)
+            d18Ow_binned <- data.frame(d18Ow_mean = vapply(bins, function(x) mean(as.matrix(d18Omat[which(resultmat$bin == x), ]) + ((sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
+                d18Ow_median = vapply(bins, function(x) median(as.matrix(d18Omat[which(resultmat$bin == x), ]) + ((sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1),
+                d18Ow_SD = vapply(bins, function(x) sd(as.matrix(d18Omat[which(resultmat$bin == x), ]) + ((sqrt((0.0433 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.119 - 0.066)) - 273.15) - 20.6) / 4.34 - 0.2), 1)
             )
         }
     }
-    d18Ow_monthly$d18Ow_SE = d18Ow_monthly$d18Ow_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
+    d18Ow_binned$d18Ow_SE = d18Ow_binned$d18Ow_SD / sqrt(vapply(bins, function(x) length(resultmat$d18Oc[which(resultmat$bin == x)]), 1))
 
-    monthly<-cbind(d18Oc_monthly,
-        D47_monthly,
-        T_monthly,
-        Trev_monthly,
-        d18Ow_monthly)
-    # Export results of monthly grouped data
-    write.csv(monthly, paste("Monthly_results.csv"))
+    bin_stats <- cbind(bins,
+        d18Oc_binned,
+        D47_binned,
+        T_binned,
+        Trev_binned,
+        d18Ow_binned)
+    colnames(bin_stats)[1] <- "bin #"
+    
+    # Export results of binned data
+    write.csv(bin_stats, paste("binned_results.csv"))
 
-    return(monthly)
-    }
+    return(bin_stats)
+}
