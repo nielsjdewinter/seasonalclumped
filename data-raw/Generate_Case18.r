@@ -1,4 +1,4 @@
-# Case 18: High=latitude shallow marine case: Spring freshening ans growth only during summer half of season
+# Case 18: High-latitude shallow marine case: Spring freshening and growth only during summer half of season
 # Set boundary conditions
 Td <- seq(1,12*365,1) # Create timeline of 12 years in days
 Ty <- Td/365 # Convert to years
