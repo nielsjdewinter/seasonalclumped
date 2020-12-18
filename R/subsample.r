@@ -30,7 +30,7 @@
 #' D <- seq(SR, sum(GR), SR)
 #' D_cum <- cumsum(GR) # Create cumulative depth vector for all values
 #' new_data <- subsample(SST, D_cum, D, AV = TRUE, plot = FALSE) # Interpolate
-#' SST values at the positions of D while calculating sample averages
+#' # SST values at the positions of D while calculating sample averages
 #' @export
 subsample <- function(data,
     old_depth,
@@ -45,7 +45,7 @@ subsample <- function(data,
         uprpos <- vapply(upr, function(x) which.min(abs(x - old_depth)), 1) # Find position of upper boundaries of sample intervals in old_data
         newdata <- vapply(1:length(lwrpos), function(x) mean(data[lwrpos[x]:uprpos[x]]), 1) # Calculate mean values between upper and lower boundaries for each sample interval
     }else{
-        linterp <- approx( # Calculate the new data value for each sample by linear interpolation
+        linterp <- stats::approx( # Calculate the new data value for each sample by linear interpolation
             x = old_depth,
             y = data,
             xout = new_depth,
@@ -54,9 +54,9 @@ subsample <- function(data,
         newdata <- linterp$y
     }
     if(plot == TRUE){ # Create plot showing subsampling if requested
-        dev.new()
+        grDevices::dev.new()
         plot(old_depth, data, type="l")
-        points(new_depth, newdata, col="red")
+        graphics::points(new_depth, newdata, col="red")
     }
     return(newdata)
 }

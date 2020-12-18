@@ -113,7 +113,7 @@ carbmodel<-function(time,
     D_cum <- cumsum(GR) # Create vector linking days to depth values
     SSTnew <- subsample(SST, D_cum, D, AV = AV) # Subsample SST along the new sample set, using mean values if AV = TRUE
     d18Ownew <- subsample(d18Ow, D_cum, D, AV = AV) # Subsample d18Ow along the new sample set, using mean values if AV = TRUE
-    Tnew <- subsample(Ty, D_cum, D, AV = AV) # Subsample time (yr) along the new sample set, using mean values if AV = TRUE
+    Tnew <- subsample(time, D_cum, D, AV = AV) # Subsample time (yr) along the new sample set, using mean values if AV = TRUE
     if(d18O_fun == "KimONeil97"){
         alpha = exp((18.03 * 1000 / (SSTnew + 273.15) - 32.42) / 1000) # Calculate alpha of calcite fractionation
         d18Ow_PDB = (0.97002 * d18Ownew - 29.98) # Convert d18Ow to PDB (following Brand et al., 2014)
@@ -132,11 +132,11 @@ carbmodel<-function(time,
     }
     if(plot == TRUE){ # Create plots of new data if requested
         plot(D, d18Oc, col = "blue")
-        lines(D, d18Oc, col = "blue")
-        par(new = TRUE)
+        graphics::lines(D, d18Oc, col = "blue")
+        graphics::par(new = TRUE)
         plot(D, D47, axes = FALSE, bty = "n", xlab = "", ylab = "", col = "red")
         lines(D, D47, bty = "n", xlab = "", ylab = "", col = "red")
-        axis(side = 4, at = pretty(range(D47)))
+        graphics::axis(side = 4, at = pretty(range(D47)))
     }
     dat<-cbind(Tnew, D, d18Oc, D47) # Combine new data for export
     return(dat) # Return the new depth, d18Oc and D47 series

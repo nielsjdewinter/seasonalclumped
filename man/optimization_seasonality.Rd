@@ -30,6 +30,11 @@ optimization_seasonality(
 \item{ages}{Vector containing ages for of all samples in years relative to
 the shell chronology}
 
+\item{SD_d18Oc}{Error on the d18Oc measurements. Either a single value
+(constant uncertainty) or a vector of length equal to the period in SST data
+(365 days by default) containing information about the error of each
+datapoint (1 standard deviation; default = 0.1 permille).}
+
 \item{d18Ow}{Vector containing d18O values (in permille VSMOW) of the
 precipitation fluid used to calculate temperatures. If only a single value is
 provided, the d18O of the fluid is presumed constant at this value.
@@ -88,7 +93,7 @@ variability in d18O composition of the precipitation fluid).
 \examples{
 \donttest{
     # find attached dummy data
-    Case1 <- seasonalclumped:::Case1
+    Case1 <- seasonalclumped::Case1
     d18Oc <- Case1[, 29]
     d18Oc <- d18Oc[-which(is.na(d18Oc))]
     D47 <- Case1[, 30]

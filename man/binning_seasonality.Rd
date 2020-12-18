@@ -26,6 +26,11 @@ binning_seasonality(
 \item{ages}{Vector containing ages for of all samples in years relative to
 the shell chronology}
 
+\item{SD_d18Oc}{Error on the d18Oc measurements. Either a single value
+(constant uncertainty) or a vector of length equal to the period in SST data
+(365 days by default) containing information about the error of each
+datapoint (1 standard deviation; default = 0.1 permille).}
+
 \item{SD_D47}{Error on the D47 measurements. Either a single value
 (constant uncertainty) or a vector of length equal to the period in SST data
 (365 days by default) containing information about the error of each
@@ -45,11 +50,6 @@ convert temperature to D47 data (for example: \code{"Bernasconi18"} or
 \code{"Jautzy20"}). Defaults to Bernasconi et al., 2018).}
 
 \item{export}{Export table summary of result (CSV format)? \code{TRUE/FALSE}}
-
-\item{SD_d18OC}{Error on the d18Oc measurements. Either a single value
-(constant uncertainty) or a vector of length equal to the period in SST data
-(365 days by default) containing information about the error of each
-datapoint (1 standard deviation; default = 0.1 permille).}
 }
 \value{
 A data frame containing monthly reconstructions of D47, temperature,
@@ -66,7 +66,7 @@ al., 2020 (Climate of the Past).
 \examples{
 \donttest{
     # find attached dummy data
-    Case1 <- seasonalclumped:::Case1
+    Case1 <- seasonalclumped::Case1
     d18Oc <- Case1[, 29]
     d18Oc <- d18Oc[-which(is.na(d18Oc))]
     D47 <- Case1[, 30]

@@ -47,5 +47,5 @@ SR <- 0.75 # Set sampling resolution to 0.75 mm
 D <- seq(SR, sum(GR), SR)
 D_cum <- cumsum(GR) # Create cumulative depth vector for all values
 new_data <- subsample(SST, D_cum, D, AV = TRUE, plot = FALSE) # Interpolate
-SST values at the positions of D while calculating sample averages
+# SST values at the positions of D while calculating sample averages
 }

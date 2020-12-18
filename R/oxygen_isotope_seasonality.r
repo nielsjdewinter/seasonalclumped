@@ -83,8 +83,8 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     # Calculate monthly statistics of all d18Oc values
     cat("Grouping d18Oc data into monthly bins: ", "\r")
     d18Oc_monthly <- data.frame(d18Oc_mean = vapply(1:12, function(x) mean(resultmat$d18Oc[which(resultmat$month == x)]), 1),
-        d18Oc_median = vapply(1:12, function(x) median(resultmat$d18Oc[which(resultmat$month == x)]), 1),
-        d18Oc_SD = vapply(1:12, function(x) sd(resultmat$d18Oc[which(resultmat$month == x)]), 1),
+        d18Oc_median = vapply(1:12, function(x) stats::median(resultmat$d18Oc[which(resultmat$month == x)]), 1),
+        d18Oc_SD = vapply(1:12, function(x) stats::sd(resultmat$d18Oc[which(resultmat$month == x)]), 1),
         d18Oc_SDint = sqrt(vapply(1:12, function(x) sum(SD_d18Oc[which(resultmat$month == x)] ^ 2) / length(SD_d18Oc[which(resultmat$month == x)]), 1))
     )
     d18Oc_monthly$d18Oc_SDtot = sqrt(d18Oc_monthly$d18Oc_SDint ^ 2 + d18Oc_monthly$d18Oc_SD ^ 2)
@@ -93,8 +93,8 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     # Calculate monthly statistics of all d18Ow values
     cat("Grouping d18Oc data into monthly bins: ", "\r")
     d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(d18Ow[which(resultmat$month == x)]), 1),
-        d18Ow_median = vapply(1:12, function(x) median(d18Ow[which(resultmat$month == x)]), 1),
-        d18Ow_SD = vapply(1:12, function(x) sd(d18Ow[which(resultmat$month == x)]), 1)
+        d18Ow_median = vapply(1:12, function(x) stats::median(d18Ow[which(resultmat$month == x)]), 1),
+        d18Ow_SD = vapply(1:12, function(x) stats::sd(d18Ow[which(resultmat$month == x)]), 1)
     )
     d18Ow_monthly$d18Oc_SE <- d18Ow_monthly$d18Ow_SD / sqrt(vapply(1:12, function(x) length(d18Ow[which(resultmat$month == x)]), 1))
 
@@ -102,13 +102,13 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     cat("Grouping d18Oc data into monthly bins: ", "\r")
     if(d18O_fun == "KimONeil97"){ # Use transfer function by Kim and O'Neil (1997)
         T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1),
-            T_median = vapply(1:12, function(x) median(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1),
-            T_SD = vapply(1:12, function(x) sd(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1)
+            T_median = vapply(1:12, function(x) stats::median(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1),
+            T_SD = vapply(1:12, function(x) stats::sd(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1)
         )
     }else if(d18O_fun == "GrossmanKu86"){ # Use transfer function by Grossman and Ku (1986) adapted by Dettman et al., (1999)
         T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(20.6 - 4.34 * (resultmat$d18Oc[which(resultmat$month == x)] - d18Ow[which(resultmat$month == x)] - 0.2)), 1),
-            T_median = vapply(1:12, function(x) median(20.6 - 4.34 * (resultmat$d18Oc[which(resultmat$month == x)] - d18Ow[which(resultmat$month == x)] - 0.2)), 1),
-            T_SD = vapply(1:12, function(x) sd(20.6 - 4.34 * (resultmat$d18Oc[which(resultmat$month == x)] - d18Ow[which(resultmat$month == x)] - 0.2)), 1)
+            T_median = vapply(1:12, function(x) stats::median(20.6 - 4.34 * (resultmat$d18Oc[which(resultmat$month == x)] - d18Ow[which(resultmat$month == x)] - 0.2)), 1),
+            T_SD = vapply(1:12, function(x) stats::sd(20.6 - 4.34 * (resultmat$d18Oc[which(resultmat$month == x)] - d18Ow[which(resultmat$month == x)] - 0.2)), 1)
         )
     }
     T_monthly$T_SE = T_monthly$T_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
@@ -116,8 +116,11 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     monthly<-cbind(d18Oc_monthly,
         d18Ow_monthly,
         T_monthly)
+
     # Export results of monthly grouped data
-    write.csv(monthly, paste("Monthly_results.csv"))
+    if(export == TRUE){
+        write.csv(monthly, paste("Monthly_results.csv"))
+    }
 
     return(monthly)
     }
