@@ -8,7 +8,7 @@
 #' @param d18Oc Vector containing sub-annually resolved d18Oc data 
 #' @param ages Vector containing ages for of all samples in years relative to
 #' the shell chronology
-#' @param SD_d18OC Error on the d18Oc measurements. Either a single value
+#' @param SD_d18Oc Error on the d18Oc measurements. Either a single value
 #' (constant uncertainty) or a vector of length equal to the period in SST data 
 #' (365 days by default) containing information about the error of each 
 #' datapoint (1 standard deviation; default = 0.1 permille).
@@ -44,7 +44,7 @@
 #' @examples
 #' \donttest{
 #'     # find attached dummy data
-#'     Case1 <- seasonalclumped:::Case1
+#'     Case1 <- seasonalclumped::Case1
 #'     d18Oc <- Case1[, 29]
 #'     ages <- Case1[, 27]
 #'     # Run function
@@ -55,7 +55,7 @@
 #'     FALSE)
 #'     }
 #' @export
-optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
+oxygen_isotope_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
     ages, # Vector containing ages for of all samples in years relative to the shell chronology
     SD_d18Oc = 0.1, # Error (1 SD) on d18Oc data 
     d18Ow = 0, # Vector containing d18O values of the precipitation fluid.
@@ -119,7 +119,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
 
     # Export results of monthly grouped data
     if(export == TRUE){
-        write.csv(monthly, paste("Monthly_results.csv"))
+        utils::write.csv(monthly, paste("Monthly_results.csv"))
     }
 
     return(monthly)

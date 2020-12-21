@@ -135,7 +135,7 @@ carbmodel<-function(time,
         graphics::lines(D, d18Oc, col = "blue")
         graphics::par(new = TRUE)
         plot(D, D47, axes = FALSE, bty = "n", xlab = "", ylab = "", col = "red")
-        lines(D, D47, bty = "n", xlab = "", ylab = "", col = "red")
+        graphics::lines(D, D47, bty = "n", xlab = "", ylab = "", col = "red")
         graphics::axis(side = 4, at = pretty(range(D47)))
     }
     dat<-cbind(Tnew, D, d18Oc, D47) # Combine new data for export

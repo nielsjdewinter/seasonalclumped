@@ -11,27 +11,27 @@
 #' @param d18Oc Vector containing sub-annually resolved d18Oc data 
 #' @param D47 Vector containing sub-annually resolved D47 data
 #' @param ages Vector containing ages for of all samples in years relative to
-#' the shell chronology
+#'   the shell chronology
 #' @param SD_d18Oc Error on the d18Oc measurements. Either a single value
-#' (constant uncertainty) or a vector of length equal to the period in SST data 
-#' (365 days by default) containing information about the error of each 
-#' datapoint (1 standard deviation; default = 0.1 permille).
+#'   (constant uncertainty) or a vector of length equal to the period in SST data 
+#'   (365 days by default) containing information about the error of each 
+#'   datapoint (1 standard deviation; default = 0.1 permille).
 #' @param SD_D47 Error on the D47 measurements. Either a single value
-#' (constant uncertainty) or a vector of length equal to the period in SST data 
-#' (365 days by default) containing information about the error of each 
-#' datapoint (1 standard deviation; default = 0.04 permille).
+#'   (constant uncertainty) or a vector of length equal to the period in SST data 
+#'   (365 days by default) containing information about the error of each 
+#'   datapoint (1 standard deviation; default = 0.04 permille).
 #' @param N Number of datapoints for Monte Carlo simulation (defailts to 1000)
 #' @param p Threshold value for the p-value of separating summer from winter
-#' reconstructions. Defaults to 0.05 (95% confidence level)
+#'   reconstructions. Defaults to 0.05 (95% confidence level)
 #' @param d18O_fun String containing the name of the transfer function used to
-#' convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
-#' or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
+#'   convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
+#'   or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
 #' @param D47_fun String containing the name of the transfer function used to
-#' convert temperature to D47 data (for example: \code{"Bernasconi18"} or
-#' \code{"Jautzy20"}). Defaults to Bernasconi et al., 2018).
+#'   convert temperature to D47 data (for example: \code{"Bernasconi18"} or
+#'   \code{"Jautzy20"}). Defaults to Bernasconi et al., 2018).
 #' @param export Export table summary of result (CSV format)? \code{TRUE/FALSE}
 #' @param export_raw Export tables containing all raw model
-#' results before being merged into tidy tables? \code{TRUE/FALSE}
+#'   results before being merged into tidy tables? \code{TRUE/FALSE}
 #' @return A data frame containing monthly reconstructions of D47, temperature,
 #' d18O of the precipitation fluid and d18Oc.
 #' @references package dependencies: TTR
@@ -92,17 +92,17 @@
 #'     ages <- Case1[, 27]
 #'     ages <- ages[-which(is.na(ages))]
 #'     # Run function
-#'     monthly <- optimization_seasonality(d18Oc,
-#'     D47,
-#'     ages,
-#'     0.1,
-#'     0.04,
-#'     1000,
-#'     0.05,
-#'     "KimONeil97",
-#'     "Bernasconi18",
-#'     FALSE,
-#'     FALSE)
+#'     monthly <- optimization_seasonality(d18Oc = d18Oc,
+#'     D47 = D47,
+#'     ages = ages,
+#'     SD_d18Oc = 0.1,
+#'     SD_D47 = 0.04,
+#'     N = 1000,
+#'     p = 0.05,
+#'     d18O_fun = "KimONeil97",
+#'     D47_fun = "Bernasconi18",
+#'     export = FALSE,
+#'     export_raw = FALSE)
 #'     }
 #' @export
 optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
@@ -114,7 +114,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     p = 0.05, # p-value threshold for considering successful separation of seasons
     d18O_fun = "KimONeil97",
     D47_fun = "Bernasconi18",
-    export = FALSE, # Should the result be exported? 
+    export = FALSE, # Should the result be exported?
     export_raw = FALSE # Should raw data of successful individual simulations be exported (WARNING: Files can get large!)
     ){
     
@@ -180,7 +180,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     }
 
     # POST PROCESSING
-    Popt <- as.data.frame(Popt[complete.cases(Popt), ]) # Remove rows with NAs
+    Popt <- as.data.frame(Popt[stats::complete.cases(Popt), ]) # Remove rows with NAs
     Popt <- Popt[-which(Popt$Samplesize > (length(d18Oc) / 2)), ] # Remove simulations taking more than half of the samples (summer and winter samples overlap)
 
     # Add temperature calculations of optimal runs
@@ -290,4 +290,4 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     }
 
     return(monthly)
-    }
+}
