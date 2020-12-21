@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.com/nielsjdewinter/seasonalclumped.svg?branch=master)](https://travis-ci.com/nielsjdewinter/seasonalclumped)
 <!-- badges: end -->
 
 The **seasonalclumped** package compiles functions that can be used for
