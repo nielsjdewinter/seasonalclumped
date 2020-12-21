@@ -1,6 +1,6 @@
 Package: seasonalclumped
 Title: Toolbox for Seasonal Temperature Reconstructions using Clumped Isotope Analyses
-Version: 0.2.2.9000
+Version: 0.2.3.9000
 Authors@R: 
     person(given = "Niels",
            family = "de Winter",
@@ -10,7 +10,7 @@ Authors@R:
 Description: Compiles a set of functions and dummy data that simplify reconstructions of seasonal temperature
 	 variability in the geological past from stable isotope and clumped isotope records in sub-annually resolved
 	 carbonate archives (e.g. mollusk shells, corals and speleothems). For more information, see
-	 de Winter et al., 2020 (Climate of the Past Discussions, https://doi.org/10.5194/cp-2020-118).
+	 de Winter et al., 2020 (Climate of the Past Discussions, <doi:10.5194/cp-2020-118>).
 Imports:
 	TTR,
 	magrittr

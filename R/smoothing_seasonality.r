@@ -1,15 +1,15 @@
-#' Function for sample size optimization-based clumped isotope seasonality
+#' Function for sample size optimization based clumped isotope seasonality
 #' reconstruction.
 #' 
 #' Combines records of stable oxygen isotope ratios (d18Oc) and
-#' clumped isotope ratios (D47) through sub-annually resolved carbonate archives
+#' clumped isotope ratios (D47) through subannually resolved carbonate archives
 #' (e.g. mollusk shells or corals) to reconstruct monthly variability in
 #' temperature and salinity (through the d18O composition of the precipitation
 #' fluid), using the mocing average method detailed in de Winter et
 #' al., 2020 (Climate of the Past).
 #'
-#' @param d18Oc Vector containing sub-annually resolved d18Oc data 
-#' @param D47 Vector containing sub-annually resolved D47 data
+#' @param d18Oc Vector containing subannually resolved d18Oc data 
+#' @param D47 Vector containing subannually resolved D47 data
 #' @param ages Vector containing ages for of all samples in years relative to
 #' the shell chronology
 #' @param SD_d18Oc Error on the d18Oc measurements. Either a single value
@@ -25,7 +25,7 @@
 #' enter the term "optimize" to let the function find the optimum window size
 #' for the record through a Monte Carlo approach.
 #' @param N Number of datapoints for Monte Carlo simulation (defailts to 1000)
-#' @param p Threshold value for the p-value of separating summer from winter
+#' @param p Threshold value for the p value of separating summer from winter
 #' reconstructions. Defaults to 0.05 (95% confidence level)
 #' @param d18O_fun String containing the name of the transfer function used to
 #' convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/oxygen_isotope_seasonality.r
 \name{oxygen_isotope_seasonality}
 \alias{oxygen_isotope_seasonality}
-\title{Function for oxygen isotope-based seasonality reconstructions.}
+\title{Function for oxygen isotope based seasonality reconstructions.}
 \usage{
 oxygen_isotope_seasonality(
   d18Oc,
@@ -14,7 +14,7 @@ oxygen_isotope_seasonality(
 )
 }
 \arguments{
-\item{d18Oc}{Vector containing sub-annually resolved d18Oc data}
+\item{d18Oc}{Vector containing subannually resolved d18Oc data}
 
 \item{ages}{Vector containing ages for of all samples in years relative to
 the shell chronology}
@@ -40,9 +40,9 @@ A data frame containing monthly reconstructions of temperature,
 d18O of the precipitation fluid and d18Oc.
 }
 \description{
-Uses records of stable oxygen isotope ratios (d18Oc) through sub-annually
+Uses records of stable oxygen isotope ratios (d18Oc) through subannually
 resolved carbonate archives (e.g. mollusk shells or corals) to reconstruct
-monthly variability in temperature and salinity (assuming user-provided
+monthly variability in temperature and salinity (assuming user provided
 variability in d18O composition of the precipitation fluid).
 }
 \examples{

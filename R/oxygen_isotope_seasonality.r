@@ -1,11 +1,11 @@
-#' Function for oxygen isotope-based seasonality reconstructions.
+#' Function for oxygen isotope based seasonality reconstructions.
 #' 
-#' Uses records of stable oxygen isotope ratios (d18Oc) through sub-annually
+#' Uses records of stable oxygen isotope ratios (d18Oc) through subannually
 #' resolved carbonate archives (e.g. mollusk shells or corals) to reconstruct
-#' monthly variability in temperature and salinity (assuming user-provided
+#' monthly variability in temperature and salinity (assuming user provided
 #' variability in d18O composition of the precipitation fluid).
 #'
-#' @param d18Oc Vector containing sub-annually resolved d18Oc data 
+#' @param d18Oc Vector containing subannually resolved d18Oc data 
 #' @param ages Vector containing ages for of all samples in years relative to
 #' the shell chronology
 #' @param SD_d18Oc Error on the d18Oc measurements. Either a single value

@@ -2,7 +2,7 @@
 % Please edit documentation in R/smoothing_seasonality.r
 \name{smoothing_seasonality}
 \alias{smoothing_seasonality}
-\title{Function for sample size optimization-based clumped isotope seasonality
+\title{Function for sample size optimization based clumped isotope seasonality
 reconstruction.}
 \usage{
 smoothing_seasonality(
@@ -21,9 +21,9 @@ smoothing_seasonality(
 )
 }
 \arguments{
-\item{d18Oc}{Vector containing sub-annually resolved d18Oc data}
+\item{d18Oc}{Vector containing subannually resolved d18Oc data}
 
-\item{D47}{Vector containing sub-annually resolved D47 data}
+\item{D47}{Vector containing subannually resolved D47 data}
 
 \item{ages}{Vector containing ages for of all samples in years relative to
 the shell chronology}
@@ -45,7 +45,7 @@ for the record through a Monte Carlo approach.}
 
 \item{N}{Number of datapoints for Monte Carlo simulation (defailts to 1000)}
 
-\item{p}{Threshold value for the p-value of separating summer from winter
+\item{p}{Threshold value for the p value of separating summer from winter
 reconstructions. Defaults to 0.05 (95\% confidence level)}
 
 \item{d18O_fun}{String containing the name of the transfer function used to
@@ -67,7 +67,7 @@ d18O of the precipitation fluid and d18Oc.
 }
 \description{
 Combines records of stable oxygen isotope ratios (d18Oc) and
-clumped isotope ratios (D47) through sub-annually resolved carbonate archives
+clumped isotope ratios (D47) through subannually resolved carbonate archives
 (e.g. mollusk shells or corals) to reconstruct monthly variability in
 temperature and salinity (through the d18O composition of the precipitation
 fluid), using the mocing average method detailed in de Winter et
