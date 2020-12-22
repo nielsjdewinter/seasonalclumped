@@ -51,32 +51,32 @@ See code to generate data in \code{data-raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
-in high-resolution paleoclimate records, \emph{Climate of the Past Discussions}
-\strong{2020}, \emph{cp-2020-118}.
+in high–resolution paleoclimate records, \emph{Climate of the Past Discussions}
+\strong{2020}, \emph{cp–2020–118}.
 \url{http://dx.doi.org/10.5194/cp-2020-118}
 
 Example of natural NAO oscillation:
 
 Sarafanov, A., On the effect of the North Atlantic Oscillation on temperature
 and salinity of the subpolar North Atlantic intermediate and deep waters
-\emph{ICES Journal of Marine Science} \strong{2009}, \emph{66.7}, 1448-1454.
+\emph{ICES Journal of Marine Science} \strong{2009}, \emph{66.7}, 1448–1454.
 \url{http://dx.doi.org/10.1093/icesjms/fsp094}
 }
 \usage{
 Case14
 }
 \description{
-A dataset containing Ages (/code{Tnew}), depth values (/code{D}), stable
+A dataset containing Ages (\code{Tnew}), depth values (\code{D}), stable
 oxygen isotope values (\eqn{\delta^(18)}{δ18}O) and clumped isotope values
 \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
-parameters following Case 14 and emplying a sampling resolution of
-/code{0.1 mm}, /code{0.2 mm}, /code{0.45 mm}, /code{0.75 mm}, /code{1.55 mm}
-and /code{3.25 mm}.
+parameters following Case 1 and emplying a sampling resolution of
+\code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
+and \code{3.25 mm}.
 }
 \details{
 Virtual case simulating open marine conditions: Seasonal change in growth
 rate in phase with temperature with linear growth decrease and dynamic growth
-threshold. Multi-annual cyclicity in \eqn{\delta^(18)O_w}{δ18Ow} (NAO-style).
+threshold. Multi–annual cyclicity in \eqn{\delta^(18)O_w}{δ18Ow} (NAO–style).
 
 Generated using the code in "Generate_Case14.r" in \code{data-raw}
 }

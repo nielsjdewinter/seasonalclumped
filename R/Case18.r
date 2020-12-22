@@ -1,13 +1,13 @@
 #' Virtual dataset Case 18
 #'
-#' A dataset containing Ages (/code{Tnew}), depth values (/code{D}), stable
+#' A dataset containing Ages (\code{Tnew}), depth values (\code{D}), stable
 #' oxygen isotope values (\eqn{\delta^(18)}{δ18}O) and clumped isotope values
 #' \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
 #' parameters following Case 18 and emplying a sampling resolution of
-#' /code{0.1 mm}, /code{0.2 mm}, /code{0.45 mm}, /code{0.75 mm}, /code{1.55 mm}
-#' and /code{3.25 mm}.
+#' \code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
+#' and \code{3.25 mm}.
 #' 
-#' Case simulating a high-latitude shallow marine ecosystem: Spring freshening
+#' Case simulating a high–latitude shallow marine ecosystem: Spring freshening
 #' and growth only during summer half of season
 #' 
 #' Generated using the code in "Generate_Case18.r" in \code{data-raw}
@@ -56,7 +56,7 @@
 #' Details on how these example cases are defined is provided in:
 #' 
 #' de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
-#' in high-resolution paleoclimate records, _Climate of the Past Discussions_ 
-#' **2020**, _cp-2020-118_.
+#' in high–resolution paleoclimate records, _Climate of the Past Discussions_ 
+#' **2020**, _cp–2020–118_.
 #' \url{http://dx.doi.org/10.5194/cp-2020-118}
 "Case18"

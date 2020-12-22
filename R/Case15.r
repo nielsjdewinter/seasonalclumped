@@ -1,15 +1,15 @@
 #' Virtual dataset Case 15
 #'
-#' A dataset containing Ages (/code{Tnew}), depth values (/code{D}), stable
+#' A dataset containing Ages (\code{Tnew}), depth values (\code{D}), stable
 #' oxygen isotope values (\eqn{\delta^(18)}{δ18}O) and clumped isotope values
 #' \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
-#' parameters following Case 15 and emplying a sampling resolution of
-#' /code{0.1 mm}, /code{0.2 mm}, /code{0.45 mm}, /code{0.75 mm}, /code{1.55 mm}
-#' and /code{3.25 mm}.
+#' parameters following Case 1 and emplying a sampling resolution of
+#' \code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
+#' and \code{3.25 mm}.
 #' 
 #' Case simulating a coastal ecosystem: Seasonal change in growth rate with fast
 #' growth in spring and linear growth decrease. Pulse of light
-#' \eqn{\delta^(18)O_w}{δ18Ow} in spring and multi-annual cyclicity in SST.
+#' \eqn{\delta^(18)O_w}{δ18Ow} in spring and multi–annual cyclicity in SST.
 #' 
 #' Generated using the code in "Generate_Case15.r" in \code{data-raw}
 #'
@@ -57,7 +57,7 @@
 #' Details on how these example cases are defined is provided in:
 #' 
 #' de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
-#' in high-resolution paleoclimate records, _Climate of the Past Discussions_ 
-#' **2020**, _cp-2020-118_.
+#' in high–resolution paleoclimate records, _Climate of the Past Discussions_ 
+#' **2020**, _cp–2020–118_.
 #' \url{http://dx.doi.org/10.5194/cp-2020-118}
 "Case15"

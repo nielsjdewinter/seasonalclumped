@@ -51,20 +51,20 @@ See code to generate data in \code{data-raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
-in high-resolution paleoclimate records, \emph{Climate of the Past Discussions}
-\strong{2020}, \emph{cp-2020-118}.
+in high–resolution paleoclimate records, \emph{Climate of the Past Discussions}
+\strong{2020}, \emph{cp–2020–118}.
 \url{http://dx.doi.org/10.5194/cp-2020-118}
 }
 \usage{
 Case10
 }
 \description{
-A dataset containing Ages (/code{Tnew}), depth values (/code{D}), stable
+A dataset containing Ages (\code{Tnew}), depth values (\code{D}), stable
 oxygen isotope values (\eqn{\delta^(18)}{δ18}O) and clumped isotope values
 \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
-parameters following Case 10 and emplying a sampling resolution of
-/code{0.1 mm}, /code{0.2 mm}, /code{0.45 mm}, /code{0.75 mm}, /code{1.55 mm}
-and /code{3.25 mm}.
+parameters following Case 1 and emplying a sampling resolution of
+\code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
+and \code{3.25 mm}.
 }
 \details{
 Case 10 describes an ideal temperature sinusoid without distortion by changes

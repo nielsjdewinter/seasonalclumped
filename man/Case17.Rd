@@ -51,33 +51,33 @@ See code to generate data in \code{data-raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
-in high-resolution paleoclimate records, \emph{Climate of the Past Discussions}
-\strong{2020}, \emph{cp-2020-118}.
+in high–resolution paleoclimate records, \emph{Climate of the Past Discussions}
+\strong{2020}, \emph{cp–2020–118}.
 \url{http://dx.doi.org/10.5194/cp-2020-118}
 
 Example of modern ENSO variability:
 Iijima, H., Kayanne, H., Morimoto, M., Abe, O. Interannual sea surface
 salinity changes in the western Pacific from 1954 to 2000 based on coral
-isotope analysis, \emph{Geophysical research letters}, \strong{2005}, \emph{32.4}, 1-4.
+isotope analysis, \emph{Geophysical research letters}, \strong{2005}, \emph{32.4}, 1–4.
 \url{http://dx.doi.org/10.1029/2004GL022026}
 }
 \usage{
 Case17
 }
 \description{
-A dataset containing Ages (/code{Tnew}), depth values (/code{D}), stable
+A dataset containing Ages (\code{Tnew}), depth values (\code{D}), stable
 oxygen isotope values (\eqn{\delta^(18)}{δ18}O) and clumped isotope values
 \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
 parameters following Case 17 and emplying a sampling resolution of
-/code{0.1 mm}, /code{0.2 mm}, /code{0.45 mm}, /code{0.75 mm}, /code{1.55 mm}
-and /code{3.25 mm}.
+\code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
+and \code{3.25 mm}.
 }
 \details{
-Case simulating a tropical ecosystem - Slight seasonal change in growth rate
+Case simulating a tropical ecosystem – Slight seasonal change in growth rate
 with slower growth in summer and linear growth decrease. Confined temperature
-seasonality, relatively strong multi-annual trend. Strong
-\eqn{\delta^(18)O_w}{δ18Ow} seasonality, light in summer, multi-annual trend
-in antiphase with multi-annual SST (ENSO-style)
+seasonality, relatively strong multi–annual trend. Strong
+\eqn{\delta^(18)O_w}{δ18Ow} seasonality, light in summer, multi–annual trend
+in antiphase with multi–annual SST (ENSO–style)
 
 Generated using the code in "Generate_Case17.r" in \code{data-raw}
 }
