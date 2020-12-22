@@ -13,7 +13,7 @@
 #' \eqn{\delta^(18)O_w}{δ18Ow} seasonality, light in summer, multi–annual trend
 #' in antiphase with multi–annual SST (ENSO–style)
 #' 
-#' Generated using the code in "Generate_Case17.r" in \code{data-raw}
+#' Generated using the code in "Generate_Case17.r" in \code{data–raw}
 #'
 #' @format A data frame with 1200 rows and 30 variables:
 #' \describe{
@@ -55,7 +55,7 @@
 #'   \item{D47}{clumped isotope value, in permille}
 #'   ...
 #' }
-#' @source See code to generate data in \code{data-raw}
+#' @source See code to generate data in \code{data–raw}
 #' Details on how these example cases are defined is provided in:
 #' 
 #' de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies

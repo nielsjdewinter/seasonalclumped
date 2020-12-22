@@ -47,7 +47,7 @@ sampling resolution of 3.25 mm}
 }
 }
 \source{
-See code to generate data in \code{data-raw}
+See code to generate data in \code{data–raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
@@ -71,6 +71,6 @@ Case 12 describes a temperature sinusoid without distortion by changes
 in growth rate or \eqn{\delta^(18)O_w}{δ18Ow}, but with a multi–annual trend
 in temperature superimposed on the seasonality.
 
-Generated using the code in "Generate_Case12.r" in \code{data-raw}
+Generated using the code in "Generate_Case12.r" in \code{data–raw}
 }
 \keyword{datasets}

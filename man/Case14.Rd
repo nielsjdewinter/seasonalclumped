@@ -47,7 +47,7 @@ sampling resolution of 3.25 mm}
 }
 }
 \source{
-See code to generate data in \code{data-raw}
+See code to generate data in \code{data–raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
@@ -78,6 +78,6 @@ Virtual case simulating open marine conditions: Seasonal change in growth
 rate in phase with temperature with linear growth decrease and dynamic growth
 threshold. Multi–annual cyclicity in \eqn{\delta^(18)O_w}{δ18Ow} (NAO–style).
 
-Generated using the code in "Generate_Case14.r" in \code{data-raw}
+Generated using the code in "Generate_Case14.r" in \code{data–raw}
 }
 \keyword{datasets}

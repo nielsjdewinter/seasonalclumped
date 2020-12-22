@@ -11,7 +11,7 @@
 #' in growth rate or \eqn{\delta^(18)O_w}{δ18Ow}, but with a multi–annual trend
 #' in temperature superimposed on the seasonality.
 #' 
-#' Generated using the code in "Generate_Case12.r" in \code{data-raw}
+#' Generated using the code in "Generate_Case12.r" in \code{data–raw}
 #'
 #' @format A data frame with 1200 rows and 30 variables:
 #' \describe{
@@ -53,7 +53,7 @@
 #'   \item{D47}{clumped isotope value, in permille}
 #'   ...
 #' }
-#' @source See code to generate data in \code{data-raw}
+#' @source See code to generate data in \code{data–raw}
 #' Details on how these example cases are defined is provided in:
 #' 
 #' de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies

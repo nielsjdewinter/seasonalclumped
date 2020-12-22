@@ -47,7 +47,7 @@ sampling resolution of 3.25 mm}
 }
 }
 \source{
-See code to generate data in \code{data-raw}
+See code to generate data in \code{data–raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
@@ -71,6 +71,6 @@ Case simulating a coastal ecosystem: Seasonal change in growth rate with fast
 growth in spring and linear growth decrease. Pulse of light
 \eqn{\delta^(18)O_w}{δ18Ow} in spring and multi–annual cyclicity in SST.
 
-Generated using the code in "Generate_Case15.r" in \code{data-raw}
+Generated using the code in "Generate_Case15.r" in \code{data–raw}
 }
 \keyword{datasets}

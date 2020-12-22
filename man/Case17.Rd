@@ -47,7 +47,7 @@ sampling resolution of 3.25 mm}
 }
 }
 \source{
-See code to generate data in \code{data-raw}
+See code to generate data in \code{data–raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
@@ -79,6 +79,6 @@ seasonality, relatively strong multi–annual trend. Strong
 \eqn{\delta^(18)O_w}{δ18Ow} seasonality, light in summer, multi–annual trend
 in antiphase with multi–annual SST (ENSO–style)
 
-Generated using the code in "Generate_Case17.r" in \code{data-raw}
+Generated using the code in "Generate_Case17.r" in \code{data–raw}
 }
 \keyword{datasets}

@@ -47,7 +47,7 @@ sampling resolution of 3.25 mm}
 }
 }
 \source{
-See code to generate data in \code{data-raw}
+See code to generate data in \code{data–raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
@@ -70,6 +70,6 @@ and \code{3.25 mm}.
 Case 1 describes an ideal temperature sinusoid without distortion by either
 changes in growth rate or changes in \eqn{\delta^(18)O_w}{δ18Ow}
 
-Generated using the code in "Generate_Case1.r" in \code{data-raw}
+Generated using the code in "Generate_Case1.r" in \code{data–raw}
 }
 \keyword{datasets}

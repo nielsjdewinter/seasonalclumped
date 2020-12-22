@@ -47,7 +47,7 @@ sampling resolution of 3.25 mm}
 }
 }
 \source{
-See code to generate data in \code{data-raw}
+See code to generate data in \code{data–raw}
 Details on how these example cases are defined is provided in:
 
 de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
@@ -72,6 +72,6 @@ in growth rate, but with seasonal variability in \eqn{\delta^(18)O_w}{δ18Ow}
 with a minimum in spring season and a small (5 days SD) error on age model
 (roughly +/– one week)
 
-Generated using the code in "Generate_Case30.r" in \code{data-raw}
+Generated using the code in "Generate_Case30.r" in \code{data–raw}
 }
 \keyword{datasets}
