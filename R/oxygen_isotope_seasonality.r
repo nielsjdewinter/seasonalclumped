@@ -23,23 +23,27 @@
 #' @return A data frame containing monthly reconstructions of temperature,
 #' d18O of the precipitation fluid and d18Oc.
 #' @references Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
-#' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59-74.
+#' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59–74.
 #'     \url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
+#'
 #' Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 #' isotope effects in synthetic carbonates, _Geochimica et Cosmochimica Acta_
-#' **1997**, _61.16_, 3461-3475.
+#' **1997**, _61.16_, 3461–3475.
 #'     \url{http://dx.doi.org/10.1016/S0016-7037(97)00169-5}
+#'
 #' Dettman, D.L., Reische, A.K., Lohmann, K.C., Controls on the stable isotope
-#' composition of seasonal growth bands in aragonitic fresh-water bivalves
-#' (Unionidae), _Geochimica et Cosmochimica Acta_ **1999**, _63.7-8_, 1049-1057.
+#' composition of seasonal growth bands in aragonitic fresh–water bivalves
+#' (Unionidae), _Geochimica et Cosmochimica Acta_ **1999**, _63.7–8_, 1049–1057.
 #'     \url{http://dx.doi.org/10.1016/S0016-7037(99)00020-4}
+#'
 #' Brand, W.A., Coplen, T.B., Vogl, J., Rosner, M., Prohaska, T., Assessment of
-#' international reference materials for isotope-ratio analysis (IUPAC Technical
-#' Report), _Pure and Applied Chemistry_ **2014**, _86.3_, 425-467.
+#' international reference materials for isotope–ratio analysis (IUPAC Technical
+#' Report), _Pure and Applied Chemistry_ **2014**, _86.3_, 425–467.
 #'     \url{http://dx.doi.org/10.1515/pac-2013-1023}
+#'
 #' de Winter, N. J., Agterhuis, T., Ziegler, M., Optimizing sampling strategies
-#' in high-resolution paleoclimate records, _Climate of the Past Discussions_
-#' **2020**, 1-52.
+#' in high–resolution paleoclimate records, _Climate of the Past Discussions_
+#' **2020**, 1–52.
 #'     \url{http://dx.doi.org/10.5194/cp-2020-118}
 #' @examples
 #' \donttest{
@@ -55,7 +59,7 @@
 #'     FALSE)
 #'     }
 #' @export
-oxygen_isotope_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
+oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data 
     ages, # Vector containing ages for of all samples in years relative to the shell chronology
     SD_d18Oc = 0.1, # Error (1 SD) on d18Oc data 
     d18Ow = 0, # Vector containing d18O values of the precipitation fluid.

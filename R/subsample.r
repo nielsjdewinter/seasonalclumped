@@ -18,7 +18,7 @@
 #' MAT <- 20 # Set mean annual temperature
 #' Amp <- 10 # Set seasonal amplitude
 #' Sext <- 2 * Amp # Calculate extent of seasonal variability
-#' TSD <- 1.5 # Set the degree of random non-seasonal noise on the SST curve
+#' TSD <- 1.5 # Set the degree of random non–seasonal noise on the SST curve
 #' # ("weather")
 #' SST <- rnorm(length(Ty), MAT + Amp * sin(2 * pi * Ty), TSD) # Create virtual
 #' # daily SST data

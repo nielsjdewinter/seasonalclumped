@@ -34,32 +34,38 @@
 #' \code{"D47"}): Vector listing D47 values for each sample
 #' @references function dependencies: subsample, subsample_mean
 #' Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
-#' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59-74.
+#' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59–74.
 #'     \url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
+#'
 #' Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 #' isotope effects in synthetic carbonates, _Geochimica et Cosmochimica Acta_
-#' **1997**, _61.16_, 3461-3475.
+#' **1997**, _61.16_, 3461–3475.
 #'     \url{http://dx.doi.org/10.1016/S0016-7037(97)00169-5}
+#'
 #' Dettman, D.L., Reische, A.K., Lohmann, K.C., Controls on the stable isotope
-#' composition of seasonal growth bands in aragonitic fresh-water bivalves
-#' (Unionidae), _Geochimica et Cosmochimica Acta_ **1999**, _63.7-8_, 1049-1057.
+#' composition of seasonal growth bands in aragonitic fresh–water bivalves
+#' (Unionidae), _Geochimica et Cosmochimica Acta_ **1999**, _63.7–8_, 1049–1057.
 #'     \url{http://dx.doi.org/10.1016/S0016-7037(99)00020-4}
+#'
 #' Brand, W.A., Coplen, T.B., Vogl, J., Rosner, M., Prohaska, T., Assessment of
-#' international reference materials for isotope-ratio analysis (IUPAC Technical
-#' Report), _Pure and Applied Chemistry_ **2014**, _86.3_, 425-467.
+#' international reference materials for isotope–ratio analysis (IUPAC Technical
+#' Report), _Pure and Applied Chemistry_ **2014**, _86.3_, 425–467.
 #'     \url{http://dx.doi.org/10.1515/pac-2013-1023}
+#'
 #' Kele, S., Breitenbach, S. F., Capezzuoli, E., Meckler, A. N., Ziegler, M.,
 #' Millan, I. M., Kluge, T., Deák, J., Hanselmann, K. and John, C. M.,
-#' Temperature dependence of oxygen-and clumped isotope fractionation in
+#' Temperature dependence of oxygen– and clumped isotope fractionation in
 #' carbonates: a study of travertines and tufas in the 6–95 C temperature range,
 #' _Geochimica et Cosmochimica Acta_ **2015**, 168, 172–192.
 #'     \url{http://dx.doi.org/10.1016/j.gca.2015.06.032}
+#'
 #' Bernasconi, S.M., Müller, I.A., Bergmann, K.D., Breitenbach, S.F., Fernandez,
 #' A., Hodell, D.A., Jaggi, M., Meckler, A.N., Millan, I. and Ziegler, M.,
 #' Reducing uncertainties in carbonate clumped isotope analysis through
 #' consistent carbonate‐based standardization. _Geochemistry, Geophysics,
-#' Geosystems_ **2018**, 19-9, 2895-2914.
+#' Geosystems_ **2018**, 19–9, 2895–2914.
 #'     \url{http://dx.doi.org/10.1029/2017GC007385}
+#'
 #' Petersen, S. V., Defliese, W. F., Saenger, C., Daëron, M., Huntington, K. W.,
 #' John, C. M., Kelson, J. R., Bernasconi, S. M., Colman, A. S., Kluge, T.,
 #' Olack, G. A., Schauer, A. J., Bajnai, D., Bonifacie, M., Breitenbach, S. F.
@@ -67,10 +73,11 @@
 #' S., Lohmann, K. C., Passey, B. H., Peral, M. Y., Petrizzo, D. A., Rosenheim,
 #' B. E., Tripati, A., Venturelli, R., Young, E. D. and Winkelstern, I. Z.,
 #' Effects of Improved 17O Correction on Interlaboratory Agreement in Clumped
-#' Isotope Calibrations, Estimates of Mineral-Specific Offsets, and Temperature
+#' Isotope Calibrations, Estimates of Mineral–Specific Offsets, and Temperature
 #' Dependence of Acid Digestion Fractionation, _Geochemistry, Geophysics,
-#' Geosystems_ **2019*, 20-7, 3495–3519.
+#' Geosystems_ **2019*, 20–7, 3495–3519.
 #'     \url{http://dx.doi.org/10.1029/2018GC008127}
+#'
 #' Jautzy, J. J., Savard, M. M., Dhillon, R. S., Bernasconi, S. M. and Smirnoff,
 #' A., Clumped isotope temperature calibration for calcite: Bridging theory and
 #' experimentation, _Geochemical Perspectives Letters_ **2020**, 14, 36–41.
@@ -83,13 +90,13 @@
 #' MAT <- 20 # Set mean annual temperature
 #' Amp <- 10 # Set seasonal amplitude
 #' Sext <- 2 * Amp # Calculate extent of seasonal variability
-#' TSD <- 1.5 # Set the degree of random non-seasonal noise on the SST curve
+#' TSD <- 1.5 # Set the degree of random non–seasonal noise on the SST curve
 #' # ("weather")
 #' SST <- rnorm(length(Ty), MAT + Amp * sin(2 * pi * Ty), TSD) # Create virtual
 #' # daily SST data
 #' GR <- rep(10 / 365, length(Ty)) # Set growth rate to 10 mm/yr and create daily
 #' # GR vector
-#' DSD <- 0.6 # Set the degree of random non-seasonal noise on the d18Osw curve
+#' DSD <- 0.6 # Set the degree of random non–seasonal noise on the d18Osw curve
 #' # ("salinity fluctuations")
 #' d18Osw<-rnorm(length(Ty), rep(0, length(Ty)), DSD) # Set d18Osw to 0 permille
 #' # VSMOW, create daily d18Osw vector
@@ -126,7 +133,7 @@ carbmodel<-function(time,
     if(D47_fun == "Bernasconi18"){
         D47 <- (0.0449 * 10 ^ 6) / (SSTnew + 273.15) ^ 2 + 0.167 # Calculate D47 of calcite for each sample according to Kele et al., 2015 modified by Bernasconi et al., 2018
     }else if(D47_fun == "Jautzy20"){
-        D47 <- (0.0433 * 10 ^ 6) / (SSTnew + 273.15) ^ 2 + 0.119 + 0.066 # Calculate D47 of calcite for each sample according to Jautzy et al., 2020 brought into 25 degrees CDES reference frame using 70-25 acid fractionation factor by Petersen et al., 2019
+        D47 <- (0.0433 * 10 ^ 6) / (SSTnew + 273.15) ^ 2 + 0.119 + 0.066 # Calculate D47 of calcite for each sample according to Jautzy et al., 2020 brought into 25 degrees CDES reference frame using 70–25 acid fractionation factor by Petersen et al., 2019
     }else{
         return("ERROR: Supplied D47 transfer function is not recognized")
     }

@@ -36,32 +36,38 @@
 #' d18O of the precipitation fluid and d18Oc.
 #' @references package dependencies: TTR
 #' Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
-#' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59-74.
+#' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59–74.
 #'     \url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
+#'
 #' Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 #' isotope effects in synthetic carbonates, _Geochimica et Cosmochimica Acta_
-#' **1997**, _61.16_, 3461-3475.
+#' **1997**, _61.16_, 3461–3475.
 #'     \url{http://dx.doi.org/10.1016/S0016-7037(97)00169-5}
+#'
 #' Dettman, D.L., Reische, A.K., Lohmann, K.C., Controls on the stable isotope
-#' composition of seasonal growth bands in aragonitic fresh-water bivalves
-#' (Unionidae), _Geochimica et Cosmochimica Acta_ **1999**, _63.7-8_, 1049-1057.
+#' composition of seasonal growth bands in aragonitic fresh–water bivalves
+#' (Unionidae), _Geochimica et Cosmochimica Acta_ **1999**, _63.7–8_, 1049–1057.
 #'     \url{http://dx.doi.org/10.1016/S0016-7037(99)00020-4}
+#'
 #' Brand, W.A., Coplen, T.B., Vogl, J., Rosner, M., Prohaska, T., Assessment of
-#' international reference materials for isotope-ratio analysis (IUPAC Technical
-#' Report), _Pure and Applied Chemistry_ **2014**, _86.3_, 425-467.
+#' international reference materials for isotope–ratio analysis (IUPAC Technical
+#' Report), _Pure and Applied Chemistry_ **2014**, _86.3_, 425–467.
 #'     \url{http://dx.doi.org/10.1515/pac-2013-1023}
+#'
 #' Kele, S., Breitenbach, S. F., Capezzuoli, E., Meckler, A. N., Ziegler, M.,
 #' Millan, I. M., Kluge, T., Deák, J., Hanselmann, K. and John, C. M.,
-#' Temperature dependence of oxygen-and clumped isotope fractionation in
+#' Temperature dependence of oxygen– and clumped isotope fractionation in
 #' carbonates: a study of travertines and tufas in the 6–95 C temperature range,
 #' _Geochimica et Cosmochimica Acta_ **2015**, 168, 172–192.
 #'     \url{http://dx.doi.org/10.1016/j.gca.2015.06.032}
+#'
 #' Bernasconi, S.M., Müller, I.A., Bergmann, K.D., Breitenbach, S.F., Fernandez,
 #' A., Hodell, D.A., Jaggi, M., Meckler, A.N., Millan, I. and Ziegler, M.,
 #' Reducing uncertainties in carbonate clumped isotope analysis through
 #' consistent carbonate‐based standardization. _Geochemistry, Geophysics,
-#' Geosystems_ **2018**, 19-9, 2895-2914.
+#' Geosystems_ **2018**, 19–9, 2895–2914.
 #'     \url{http://dx.doi.org/10.1029/2017GC007385}
+#'
 #' Petersen, S. V., Defliese, W. F., Saenger, C., Daëron, M., Huntington, K. W.,
 #' John, C. M., Kelson, J. R., Bernasconi, S. M., Colman, A. S., Kluge, T.,
 #' Olack, G. A., Schauer, A. J., Bajnai, D., Bonifacie, M., Breitenbach, S. F.
@@ -69,17 +75,19 @@
 #' S., Lohmann, K. C., Passey, B. H., Peral, M. Y., Petrizzo, D. A., Rosenheim,
 #' B. E., Tripati, A., Venturelli, R., Young, E. D. and Winkelstern, I. Z.,
 #' Effects of Improved 17O Correction on Interlaboratory Agreement in Clumped
-#' Isotope Calibrations, Estimates of Mineral-Specific Offsets, and Temperature
+#' Isotope Calibrations, Estimates of Mineral–Specific Offsets, and Temperature
 #' Dependence of Acid Digestion Fractionation, _Geochemistry, Geophysics,
-#' Geosystems_ **2019*, 20-7, 3495–3519.
+#' Geosystems_ **2019*, 20–7, 3495–3519.
 #'     \url{http://dx.doi.org/10.1029/2018GC008127}
+#'
 #' Jautzy, J. J., Savard, M. M., Dhillon, R. S., Bernasconi, S. M. and Smirnoff,
 #' A., Clumped isotope temperature calibration for calcite: Bridging theory and
 #' experimentation, _Geochemical Perspectives Letters_ **2020**, 14, 36–41.
 #'     \url{http://dx.doi.org/10.7185/geochemlet.2021}
+#'
 #' de Winter, N. J., Agterhuis, T., Ziegler, M., Optimizing sampling strategies
-#' in high-resolution paleoclimate records, _Climate of the Past Discussions_
-#' **2020**, 1-52.
+#' in high–resolution paleoclimate records, _Climate of the Past Discussions_
+#' **2020**, 1–52.
 #'     \url{http://dx.doi.org/10.5194/cp-2020-118}
 #' @examples
 #' \donttest{
@@ -105,13 +113,13 @@
 #'     export_raw = FALSE)
 #'     }
 #' @export
-optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data 
-    D47, # Sub-annually resolved D47 data
+optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data 
+    D47, # Sub–annually resolved D47 data
     ages, # Vector containing ages for of all samples in years relative to the shell chronology
     SD_d18Oc = 0.1, # Error (1 SD) on d18Oc data 
     SD_D47 = 0.04, # Error (1 SD) on D47 data 
     N = 1000, # Number of Monte Carlo simulations for optimization
-    p = 0.05, # p-value threshold for considering successful separation of seasons
+    p = 0.05, # p–value threshold for considering successful separation of seasons
     d18O_fun = "KimONeil97",
     D47_fun = "Bernasconi18",
     export = FALSE, # Should the result be exported?
@@ -150,7 +158,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         cat(paste("Sample size optimization Monte Carlo Iteration: ", i),"\r")
         utils::flush.console()
         
-        # Expanding window seasonality and T-test
+        # Expanding window seasonality and T–test
         # Keep record of summer and winter values for successful sample windows
         # Isolate simulated d18O and D47 data
         X <- cbind(d18Omat[, i], D47mat[, i])
@@ -166,8 +174,8 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
         Dwinsd <- TTR::runSD(X[, 2], 1, cumulative = TRUE) # Calculate standard deviation within winter D47 values for progressively large sample size windows
         # Calculate statistics of summer and winter separation for each sampling window
         SDpool <- sqrt((Dsumsd ^ 2 + Dwinsd ^ 2) / 2) # Calculate pooled standard deviation for each window
-        T <- (Dsum - Dwin) / (SDpool * sqrt(2 / win)) # Calculate two-sample T-value for each window (equal sample size, equal variance)
-        Pval <- stats::pt(T, win - 1) # Calculate p-value for each window
+        T <- (Dsum - Dwin) / (SDpool * sqrt(2 / win)) # Calculate two–sample T–value for each window (equal sample size, equal variance)
+        Pval <- stats::pt(T, win - 1) # Calculate p–value for each window
         if(length(which(Pval < p)) > 0){ # Only add rows to Popt if there are successful simulations
             res<-cbind(win[which(Pval < p)],
                 dsum[which(Pval < p)],
@@ -227,7 +235,7 @@ optimization_seasonality <- function(d18Oc, # Sub-annually resolved d18Oc data
     )
     d18Oc_monthly$d18Oc_SE <- d18Oc_monthly$d18Oc_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
 
-    # Calculate monthly statistics of all D47 values using the d18Oc measurements and the D47-d18Oc slopes of all successful simulations
+    # Calculate monthly statistics of all D47 values using the d18Oc measurements and the D47–d18Oc slopes of all successful simulations
     cat("Grouping D47 data into monthly bins: ", "\r")
     D47_monthly <- data.frame(D47_mean = vapply(1:12, function(x) mean(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1),
         D47_median = vapply(1:12, function(x) stats::median(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1),
