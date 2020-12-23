@@ -24,6 +24,7 @@ There were 2 NOTES:
     speleothems (13:55)
 
   These are parts of academic citations and cannot be replaced
+  All remaining spelling mistakes flagged by "devtools::spell_check()" are jargon or names
 
 * Found the following (possibly) invalid URLs:
   URL: http://doi.org/bvpzws (moved to https://doi.org/10.1016/0168-9622(86)90057-6)

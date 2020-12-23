@@ -32,7 +32,7 @@ Firstly, it contains four functions that can be used to extract seasonal
 reconstruction data from stable oxygen isotope records (δ18O) and
 clumped isotope records (Δ47) from seasonal paleo-archives. These
 functions take stable oxygen isotope (δ18O) and clumped isotope (Δ47)
-data alighned to a sub-annual age model, and use this data to extract
+data aligned to a sub-annual age model, and use this data to extract
 seasonal temperature and δ18Ow (δ18O value of the precipitation fluid)
 reconstructions. For more information about constructing sub-annual
 resolved age models in these types of records, please refer to the

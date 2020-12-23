@@ -23,7 +23,7 @@
 #' (constant uncertainty) or a vector of length equal to the period in SST data 
 #' (365 days by default) containing information about the error of each 
 #' datapoint (1 standard deviation; default = 0.04 permille).
-#' @param N Number of datapoints for Monte Carlo simulation (defailts to 1000)
+#' @param N Number of datapoints for Monte Carlo simulation (defaults to 1000)
 #' @param binsize Size of the bins in which records are subdivided. \code{month}
 #' and \code{season} (period of three months) is currently supported.
 #' @param d18O_fun String containing the name of the transfer function used to

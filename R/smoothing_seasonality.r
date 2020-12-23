@@ -5,7 +5,7 @@
 #' and clumped isotope ratios (D47) through subannually resolved carbonate
 #' archives (e.g. mollusk shells or corals) to reconstruct monthly variability
 #' in temperature and salinity (through the \eqn{\delta^{18}O}{δ18O} composition
-#' of the precipitation fluid), using the mocing average method detailed in de
+#' of the precipitation fluid), using the moving average method detailed in de
 #' Winter et al., 2020 (Climate of the Past).
 #'
 #' @param d18Oc Vector containing subannually resolved
@@ -25,7 +25,7 @@
 #' calculation (integer with values between 2 and the length of the record), or
 #' enter the term "optimize" to let the function find the optimum window size
 #' for the record through a Monte Carlo approach.
-#' @param N Number of datapoints for Monte Carlo simulation (defailts to 1000)
+#' @param N Number of datapoints for Monte Carlo simulation (defaults to 1000)
 #' @param p Threshold value for the p value of separating summer from winter
 #' reconstructions. Defaults to 0.05 (95% confidence level)
 #' @param d18O_fun String containing the name of the transfer function used to

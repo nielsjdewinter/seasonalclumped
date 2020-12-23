@@ -22,7 +22,7 @@
 #' single value (constant uncertainty) or a vector of length equal to the period
 #' in SST data (365 days by default) containing information about the error of
 #' each datapoint (1 standard deviation; default = 0.04 permille).
-#' @param N Number of datapoints for Monte Carlo simulation (defailts to 1000)
+#' @param N Number of datapoints for Monte Carlo simulation (defaults to 1000)
 #' @param p Threshold value for the p value of separating summer from winter
 #' reconstructions. Defaults to 0.05 (95% confidence level)
 #' @param d18O_fun String containing the name of the transfer function used to
