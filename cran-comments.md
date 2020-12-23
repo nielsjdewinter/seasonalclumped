@@ -10,19 +10,22 @@ This is a new submission of the seasonalclumped package
 * OS X 10.13 (on travis ci) R 4.0.3
 
 ## R CMD check results
-There were two NOTEs (see below)
+There were no ERRORs, WARNINGSs or NOTEs
 
 ## R-hub Builder results
-2 NOTES:
-Possibly mis-spelled words in DESCRIPTION:
+There were no ERRORs or WARNINGs.
+
+There were 2 NOTES:
+
+* Possibly mis-spelled words in DESCRIPTION:
     al (14:16)
     de (14:3)
     et (14:13)
     speleothems (13:55)
 
-ANSWER: These are parts of academic citations and cannot be replaced
+  These are parts of academic citations and cannot be replaced
 
-Found the following (possibly) invalid URLs:
+* Found the following (possibly) invalid URLs:
   URL: http://doi.org/bvpzws (moved to https://doi.org/10.1016/0168-9622(86)90057-6)
     From: man/binning_seasonality.Rd
           man/carbmodel.Rd
@@ -32,7 +35,7 @@ Found the following (possibly) invalid URLs:
     Status: 200
     Message: OK
 
-ANSWER: Checked this short DOI and it is valid and links to the correct reference.
+  Checked this short DOI and it is valid and links to the correct reference.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package
