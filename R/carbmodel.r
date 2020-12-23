@@ -1,37 +1,44 @@
-#' Function that produces d18O and D47 records
+#' Function that produces \eqn{\delta^{18}O}{δ18O} and \eqn{\Delta_{47}}{Δ47} records
 #' 
-#' Takes vectors of time, temperature, growth rate and d18O of the fluid and
-#' converts them into a d18O and D47 record. The d18O and D47 values are
-#' calculated for every depth value provided in the "D" vector. By default, the
-#' empirical transfer function by Kim and O'Neil (1997) is used to produce the
-#' d18O record, but other transfer functions (e.g. Grossman and Ku, 1986) are
-#' also supported. The default transfer function for converting temperature data
-#' to D47 data is based on Bernasconi et al. (2018), but other transfer
-#' functions (e.g. Jautzy et al., 2020) are also supported.
+#' Takes vectors of time, temperature, growth rate and \eqn{\delta^{18}O}{δ18O}
+#' of the fluid and converts them into a \eqn{\delta^{18}O}{δ18O} and
+#' \eqn{\Delta_{47}}{Δ47} record. The \eqn{\delta^{18}O}{δ18O} and
+#' \eqn{\Delta_{47}}{Δ47} values are calculated for every depth value provided 
+#' in the \code{D} vector. By default, the empirical transfer function by Kim
+#' and O'Neil (1997) is used to produce the \eqn{\delta^{18}O}{δ18O} record, but
+#' other transfer functions (e.g. Grossman and Ku, 1986) are also supported. The
+#' default transfer function for converting temperature data to
+#' \eqn{\Delta_{47}}{Δ47} data is based on Bernasconi et al. (2018), but other
+#' transfer functions (e.g. Jautzy et al., 2020) are also supported.
 #' 
 #' @param time Time vector (values in years)
 #' @param SST A vector containing temperature data (values in degrees C; length
 #' must be equal to that of \code{time})
 #' @param GR Growth rate vector (values in same time unit as \code{time} (years);
 #' length must be equal to that of \code{time})
-#' @param d18Ow A vector containing data on the d18O value of the precipitation
-#' fluid (values in permille VSMOW; length must be equal to that of \code{time})
+#' @param d18Ow A vector containing data on the \eqn{\delta^{18}O}{δ18O} value of
+#' the precipitation fluid (values in permille VSMOW; length must be equal to
+#' that of \code{time})
 #' @param D Depth vector (values in same depth unit as \code{GR})
 #' @param d18O_fun String containing the name of the transfer function used to
-#' convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
-#' or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
+#' convert temperature and \eqn{\delta^{18}O_{w}}{δ18Ow} to
+#' \eqn{\delta^{18}O_{c}}{δ18Oc} data (for example: \code{"KimONeil97"} or
+#' \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
 #' @param D47_fun String containing the name of the transfer function used to
-#' convert temperature to D47 data (for example: \code{"Bernasconi18"} or
-#' \code{"Jautzy20"}). Defaults to Bernasconi et al., 2018).
+#' convert temperature to \eqn{\Delta_{47}}{Δ47} data (for example: 
+#' \code{"Bernasconi18"} or \code{"Jautzy20"}). Defaults to Bernasconi et al.,
+#' 2018).
 #' @param AV Should the subsampling take into account the mean value within the
 #' sample interval? \code{TRUE/FALSE} If \code{FALSE}, the interpolated value
 #' corresponding to the exact position is used instead of the mean of the interval
 #' @param plot Should the result be plotted? \code{TRUE/FALSE}
-#' @return A matrix containing subsampled time, depth, d18Oc and D47 values:
+#' @return A matrix containing subsampled time, depth,
+#' \eqn{\delta^{18}O_{c}}{δ18Oc} and \eqn{\Delta_{47}}{Δ47} values:
 #' \code{"Tnew"}): New time vector after subsampling
 #' \code{"D"}): New depth vector after subsampling
-#' \code{"d18Oc"}): Vector listing d18Oc values for each sample
-#' \code{"D47"}): Vector listing D47 values for each sample
+#' \code{"d18Oc"}): Vector listing \eqn{\delta^{18}O_{c}}{δ18Oc} values for each
+#' sample
+#' \code{"D47"}): Vector listing \eqn{\Delta_{47}}{Δ47} values for each sample
 #' @references function dependencies: subsample, subsample_mean
 #' Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 #' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59–74.

@@ -1,29 +1,34 @@
 #' Function for oxygen isotope based seasonality reconstructions.
 #' 
-#' Uses records of stable oxygen isotope ratios (d18Oc) through subannually
-#' resolved carbonate archives (e.g. mollusk shells or corals) to reconstruct
-#' monthly variability in temperature and salinity (assuming user provided
-#' variability in d18O composition of the precipitation fluid).
+#' Uses records of stable oxygen isotope ratios (\eqn{\delta^{18}O_{c}}{δ18Oc})
+#' through subannually resolved carbonate archives (e.g. mollusk shells or
+#' corals) to reconstruct monthly variability in temperature and salinity
+#' (assuming user provided variability in \eqn{\delta^{18}O}{δ18O} composition of
+#' the precipitation fluid).
 #'
-#' @param d18Oc Vector containing subannually resolved d18Oc data 
+#' @param d18Oc Vector containing subannually resolved
+#' \eqn{\delta^{18}O_{c}}{δ18Oc} data
 #' @param ages Vector containing ages for of all samples in years relative to
 #' the shell chronology
-#' @param SD_d18Oc Error on the d18Oc measurements. Either a single value
-#' (constant uncertainty) or a vector of length equal to the period in SST data 
-#' (365 days by default) containing information about the error of each 
-#' datapoint (1 standard deviation; default = 0.1 permille).
-#' @param d18Ow Vector containing d18O values (in permille VSMOW) of the
-#' precipitation fluid used to calculate temperatures. If only a single value is
-#' provided, the d18O of the fluid is presumed constant at this value.
-#' Default = 0 permille VSMOW.
+#' @param SD_d18Oc Error on the \eqn{\delta^{18}O_{c}}{δ18Oc} measurements.
+#' Either a single value (constant uncertainty) or a vector of length equal to
+#' the period in SST data (365 days by default) containing information about the
+#' error of each datapoint (1 standard deviation; default = 0.1 permille).
+#' @param d18Ow Vector containing \eqn{\delta^{18}O}{δ18O} values (in permille
+#' VSMOW) of the precipitation fluid used to calculate temperatures. If only a
+#' single value is provided, the \eqn{\delta^{18}O}{δ18O} of the fluid is
+#' presumed constant at this value. Default = 0 permille VSMOW.
 #' @param d18O_fun String containing the name of the transfer function used to
-#' convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
-#' or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
+#' convert temperature and \eqn{\delta^{18}O_{w}}{δ18Ow} to
+#' \eqn{\delta^{18}O_{c}}{δ18Oc} data (for example: \code{"KimONeil97"} or
+#' \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).
 #' @param export Export table summary of result (CSV format)? \code{TRUE/FALSE}
 #' @return A data frame containing monthly reconstructions of temperature,
-#' d18O of the precipitation fluid and d18Oc.
-#' @references Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
-#' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59–74.
+#' \eqn{\delta^{18}O}{δ18O} of the precipitation fluid and
+#' \eqn{\delta^{18}O_{c}}{δ18Oc}.
+#' @references Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation
+#' in biogenic aragonite: temperature effects, _Chemical Geology_ **1986**,
+#' _59.1_, 59–74.
 #'     \url{http://doi.org/bvpzws}
 #'
 #' Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen

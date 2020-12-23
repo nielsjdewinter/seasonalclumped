@@ -59,8 +59,8 @@ in high–resolution paleoclimate records, \emph{Climate of the Past Discussions
 Case26
 }
 \description{
-A dataset containing Ages (\code{Tnew}), depth values (\code{D}), stable
-oxygen isotope values (\eqn{\delta^(18)}{δ18}O) and clumped isotope values
+A dataset containing ages (\code{Tnew}), depth values (\code{D}), stable
+oxygen isotope values (\eqn{\delta^{18}O}{δ18O}) and clumped isotope values
 \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
 parameters following Case 26 and emplying a sampling resolution of
 \code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
@@ -68,8 +68,8 @@ and \code{3.25 mm}.
 }
 \details{
 Case 26 describes an ideal temperature sinusoid without distortion by either
-changes in growth rate or changes in \eqn{\delta^(18)O_w}{δ18Ow} but with a
-shorter (6 yr) record length.
+changes in growth rate or changes in  \eqn{\delta^{18}O_{w}}{δ18Ow} but with
+a shorter (6 yr) record length.
 
 Generated using the code in "Generate_Case26.r" in \code{data–raw}
 }

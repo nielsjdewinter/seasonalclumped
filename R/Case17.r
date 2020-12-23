@@ -1,7 +1,7 @@
 #' Virtual dataset Case 17
 #'
-#' A dataset containing Ages (\code{Tnew}), depth values (\code{D}), stable
-#' oxygen isotope values (\eqn{\delta^(18)}{δ18}O) and clumped isotope values
+#' A dataset containing ages (\code{Tnew}), depth values (\code{D}), stable
+#' oxygen isotope values (\eqn{\delta^{18}O}{δ18O}) and clumped isotope values
 #' \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
 #' parameters following Case 17 and emplying a sampling resolution of
 #' \code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
@@ -10,7 +10,7 @@
 #' Case simulating a tropical ecosystem – Slight seasonal change in growth rate
 #' with slower growth in summer and linear growth decrease. Confined temperature
 #' seasonality, relatively strong multi–annual trend. Strong
-#' \eqn{\delta^(18)O_w}{δ18Ow} seasonality, light in summer, multi–annual trend
+#' \eqn{\delta^{18}O_{w}}{δ18Ow} seasonality, light in summer, multi–annual trend
 #' in antiphase with multi–annual SST (ENSO–style)
 #' 
 #' Generated using the code in "Generate_Case17.r" in \code{data–raw}

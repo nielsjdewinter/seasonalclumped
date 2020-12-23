@@ -20,22 +20,23 @@ optimization_seasonality(
 )
 }
 \arguments{
-\item{d18Oc}{Vector containing subannually resolved d18Oc data}
+\item{d18Oc}{Vector containing subannually resolved \eqn{\delta^{18}O_{c}}{δ18Oc}
+data}
 
-\item{D47}{Vector containing subannually resolved D47 data}
+\item{D47}{Vector containing subannually resolved \eqn{\Delta_{47}}{Δ47} data}
 
 \item{ages}{Vector containing ages for of all samples in years relative to
 the shell chronology}
 
-\item{SD_d18Oc}{Error on the d18Oc measurements. Either a single value
-(constant uncertainty) or a vector of length equal to the period in SST data
-(365 days by default) containing information about the error of each
-datapoint (1 standard deviation; default = 0.1 permille).}
+\item{SD_d18Oc}{Error on the \eqn{\delta^{18}O_{c}}{δ18Oc} measurements.
+Either a single value (constant uncertainty) or a vector of length equal to
+the period in SST data (365 days by default) containing information about the
+error of each datapoint (1 standard deviation; default = 0.1 permille).}
 
-\item{SD_D47}{Error on the D47 measurements. Either a single value
-(constant uncertainty) or a vector of length equal to the period in SST data
-(365 days by default) containing information about the error of each
-datapoint (1 standard deviation; default = 0.04 permille).}
+\item{SD_D47}{Error on the \eqn{\Delta_{47}}{Δ47} measurements. Either a
+single value (constant uncertainty) or a vector of length equal to the period
+in SST data (365 days by default) containing information about the error of
+each datapoint (1 standard deviation; default = 0.04 permille).}
 
 \item{N}{Number of datapoints for Monte Carlo simulation (defailts to 1000)}
 
@@ -43,12 +44,14 @@ datapoint (1 standard deviation; default = 0.04 permille).}
 reconstructions. Defaults to 0.05 (95\% confidence level)}
 
 \item{d18O_fun}{String containing the name of the transfer function used to
-convert temperature and d18Ow to d18Oc data (for example: \code{"KimONeil97"}
-or \code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).}
+convert temperature and \eqn{\delta^{18}O_{w}}{δ18Ow} to
+\eqn{\delta^{18}O_{c}}{δ18Oc} data (for example: \code{"KimONeil97"} or
+\code{"GrossmanKu86"}). Defaults to Kim and O'Neil (1997).}
 
 \item{D47_fun}{String containing the name of the transfer function used to
-convert temperature to D47 data (for example: \code{"Bernasconi18"} or
-\code{"Jautzy20"}). Defaults to Bernasconi et al., 2018).}
+convert temperature to \eqn{\Delta_{47}}{Δ47} data (for example:
+\code{"Bernasconi18"} or \code{"Jautzy20"}). Defaults to Bernasconi et al.,
+2018).}
 
 \item{export}{Export table summary of result (CSV format)? \code{TRUE/FALSE}}
 
@@ -56,16 +59,18 @@ convert temperature to D47 data (for example: \code{"Bernasconi18"} or
 results before being merged into tidy tables? \code{TRUE/FALSE}}
 }
 \value{
-A data frame containing monthly reconstructions of D47, temperature,
-d18O of the precipitation fluid and d18Oc.
+A data frame containing monthly reconstructions of
+\eqn{\Delta_{47}}{Δ47}, temperature, \eqn{\delta^{18}O}{δ18O} of the
+precipitation fluid and \eqn{\delta^{18}O_{c}}{δ18Oc}.
 }
 \description{
-Combines records of stable oxygen isotope ratios (d18Oc) and
-clumped isotope ratios (D47) through subannually resolved carbonate archives
-(e.g. mollusk shells or corals) to reconstruct monthly variability in
-temperature and salinity (through the d18O composition of the precipitation
-fluid), using the sample size optimization method detailed in de Winter et
-al., 2020 (Climate of the Past).
+Combines records of stable oxygen isotope ratios (\eqn{\delta^{18}O_{c}}{δ18Oc})
+and clumped isotope ratios (\eqn{\Delta_{47}}{Δ47}) through subannually
+resolved carbonate archives (e.g. mollusk shells or corals) to reconstruct
+monthly variability in temperature and salinity (through the
+\eqn{\delta^{18}O}{δ18O} composition of the precipitation fluid), using the
+sample size optimization method detailed in de Winter et al., 2020 (Climate
+of the Past).
 }
 \examples{
 \donttest{
