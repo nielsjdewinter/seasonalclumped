@@ -56,10 +56,10 @@
 #' @source See code to generate data in \code{data–raw}
 #' Details on how these example cases are defined is provided in:
 #' 
-#' de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
-#' in high–resolution paleoclimate records, _Climate of the Past Discussions_ 
-#' **2020**, _cp–2020–118_.
-#' \url{http://dx.doi.org/10.5194/cp-2020-118}
+#' de Winter, N. J., Agterhuis, T., Ziegler, M., Optimizing sampling strategies
+#' in high–resolution paleoclimate records, _Climate of the Past Discussions_
+#' **2020**, 1–52.
+#'     \url{https://doi.org/fpc4}
 #' 
 #' Example of natural NAO oscillation:
 #' 

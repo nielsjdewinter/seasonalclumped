@@ -50,16 +50,16 @@ sampling resolution of 3.25 mm}
 See code to generate data in \code{data–raw}
 Details on how these example cases are defined is provided in:
 
-de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
+de Winter, N. J., Agterhuis, T., Ziegler, M., Optimizing sampling strategies
 in high–resolution paleoclimate records, \emph{Climate of the Past Discussions}
-\strong{2020}, \emph{cp–2020–118}.
-\url{http://dx.doi.org/10.5194/cp-2020-118}
+\strong{2020}, 1–52.
+\url{https://doi.org/fpc4}
 
 Example of modern ENSO variability:
 Iijima, H., Kayanne, H., Morimoto, M., Abe, O. Interannual sea surface
 salinity changes in the western Pacific from 1954 to 2000 based on coral
 isotope analysis, \emph{Geophysical research letters}, \strong{2005}, \emph{32.4}, 1–4.
-\url{http://dx.doi.org/10.1029/2004GL022026}
+\url{https://doi.org/bhv8dn}
 }
 \usage{
 Case17

@@ -95,36 +95,36 @@ al., 2020 (Climate of the Past).
 package dependencies: TTR
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 aragonite: temperature effects, \emph{Chemical Geology} \strong{1986}, \emph{59.1}, 59–74.
-\url{http://dx.doi.org/10.1016/0168-9622(86)90057-6}
+\url{http://doi.org/bvpzws}
 
 Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 isotope effects in synthetic carbonates, \emph{Geochimica et Cosmochimica Acta}
 \strong{1997}, \emph{61.16}, 3461–3475.
-\url{http://dx.doi.org/10.1016/S0016-7037(97)00169-5}
+\url{https://doi.org/c7bwbp}
 
 Dettman, D.L., Reische, A.K., Lohmann, K.C., Controls on the stable isotope
 composition of seasonal growth bands in aragonitic fresh–water bivalves
 (Unionidae), \emph{Geochimica et Cosmochimica Acta} \strong{1999}, \emph{63.7–8}, 1049–1057.
-\url{http://dx.doi.org/10.1016/S0016-7037(99)00020-4}
+\url{https://doi.org/cbb7zc}
 
 Brand, W.A., Coplen, T.B., Vogl, J., Rosner, M., Prohaska, T., Assessment of
 international reference materials for isotope–ratio analysis (IUPAC Technical
 Report), \emph{Pure and Applied Chemistry} \strong{2014}, \emph{86.3}, 425–467.
-\url{http://dx.doi.org/10.1515/pac-2013-1023}
+\url{https://doi.org/fpc2}
 
 Kele, S., Breitenbach, S. F., Capezzuoli, E., Meckler, A. N., Ziegler, M.,
 Millan, I. M., Kluge, T., Deák, J., Hanselmann, K. and John, C. M.,
 Temperature dependence of oxygen– and clumped isotope fractionation in
 carbonates: a study of travertines and tufas in the 6–95 C temperature range,
 \emph{Geochimica et Cosmochimica Acta} \strong{2015}, 168, 172–192.
-\url{http://dx.doi.org/10.1016/j.gca.2015.06.032}
+\url{https://doi.org/f7sgn6}
 
 Bernasconi, S.M., Müller, I.A., Bergmann, K.D., Breitenbach, S.F., Fernandez,
 A., Hodell, D.A., Jaggi, M., Meckler, A.N., Millan, I. and Ziegler, M.,
-Reducing uncertainties in carbonate clumped isotope analysis through
-consistent carbonate‐based standardization. \emph{Geochemistry, Geophysics,
+Reducing uncertainties in carbonate–clumped isotope analysis through
+consistent carbonate based standardization. \emph{Geochemistry, Geophysics,
 Geosystems} \strong{2018}, 19–9, 2895–2914.
-\url{http://dx.doi.org/10.1029/2017GC007385}
+\url{https://doi.org/gfmjrw}
 
 Petersen, S. V., Defliese, W. F., Saenger, C., Daëron, M., Huntington, K. W.,
 John, C. M., Kelson, J. R., Bernasconi, S. M., Colman, A. S., Kluge, T.,
@@ -136,15 +136,15 @@ Effects of Improved 17O Correction on Interlaboratory Agreement in Clumped
 Isotope Calibrations, Estimates of Mineral–Specific Offsets, and Temperature
 Dependence of Acid Digestion Fractionation, \emph{Geochemistry, Geophysics,
 Geosystems} *\emph{2019}, 20–7, 3495–3519.
-\url{http://dx.doi.org/10.1029/2018GC008127}
+\url{https://doi.org/ggrc39}
 
 Jautzy, J. J., Savard, M. M., Dhillon, R. S., Bernasconi, S. M. and Smirnoff,
 A., Clumped isotope temperature calibration for calcite: Bridging theory and
 experimentation, \emph{Geochemical Perspectives Letters} \strong{2020}, 14, 36–41.
-\url{http://dx.doi.org/10.7185/geochemlet.2021}
+\url{https://doi.org/fpc3}
 
 de Winter, N. J., Agterhuis, T., Ziegler, M., Optimizing sampling strategies
 in high–resolution paleoclimate records, \emph{Climate of the Past Discussions}
 \strong{2020}, 1–52.
-\url{http://dx.doi.org/10.5194/cp-2020-118}
+\url{https://doi.org/fpc4}
 }

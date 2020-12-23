@@ -58,14 +58,14 @@
 #' @source See code to generate data in \code{data–raw}
 #' Details on how these example cases are defined is provided in:
 #' 
-#' de Winter, N.J., Agterhuis, T.A., Ziegler, M., Optimizing sampling strategies
-#' in high–resolution paleoclimate records, _Climate of the Past Discussions_ 
-#' **2020**, _cp–2020–118_.
-#' \url{http://dx.doi.org/10.5194/cp-2020-118}
+#' de Winter, N. J., Agterhuis, T., Ziegler, M., Optimizing sampling strategies
+#' in high–resolution paleoclimate records, _Climate of the Past Discussions_
+#' **2020**, 1–52.
+#'     \url{https://doi.org/fpc4}
 #'
 #' Example of modern ENSO variability:
 #' Iijima, H., Kayanne, H., Morimoto, M., Abe, O. Interannual sea surface
 #' salinity changes in the western Pacific from 1954 to 2000 based on coral
 #' isotope analysis, _Geophysical research letters_, **2005**, _32.4_, 1–4.
-#' \url{http://dx.doi.org/10.1029/2004GL022026}
+#' \url{https://doi.org/bhv8dn}
 "Case17"
