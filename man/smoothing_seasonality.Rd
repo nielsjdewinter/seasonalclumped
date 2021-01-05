@@ -44,7 +44,7 @@ calculation (integer with values between 2 and the length of the record), or
 enter the term "optimize" to let the function find the optimum window size
 for the record through a Monte Carlo approach.}
 
-\item{N}{Number of datapoints for Monte Carlo simulation (defailts to 1000)}
+\item{N}{Number of datapoints for Monte Carlo simulation (defaults to 1000)}
 
 \item{p}{Threshold value for the p value of separating summer from winter
 reconstructions. Defaults to 0.05 (95\% confidence level)}
@@ -73,7 +73,7 @@ Combines records of stable oxygen isotope ratios (\eqn{\delta^{18}O_{w}}{δ18Ow}
 and clumped isotope ratios (D47) through subannually resolved carbonate
 archives (e.g. mollusk shells or corals) to reconstruct monthly variability
 in temperature and salinity (through the \eqn{\delta^{18}O}{δ18O} composition
-of the precipitation fluid), using the mocing average method detailed in de
+of the precipitation fluid), using the moving average method detailed in de
 Winter et al., 2020 (Climate of the Past).
 }
 \examples{
@@ -105,7 +105,7 @@ Winter et al., 2020 (Climate of the Past).
 package dependencies: TTR
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 aragonite: temperature effects, \emph{Chemical Geology} \strong{1986}, \emph{59.1}, 59–74.
-\url{http://doi.org/bvpzws}
+\url{https://doi.org/bvpzws}
 
 Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 isotope effects in synthetic carbonates, \emph{Geochimica et Cosmochimica Acta}

@@ -39,7 +39,7 @@ single value
 (365 days by default) containing information about the error of each
 datapoint (1 standard deviation; default = 0.04 permille).}
 
-\item{N}{Number of datapoints for Monte Carlo simulation (defailts to 1000)}
+\item{N}{Number of datapoints for Monte Carlo simulation (defaults to 1000)}
 
 \item{binsize}{Size of the bins in which records are subdivided. \code{month}
 and \code{season} (period of three months) is currently supported.}
@@ -96,7 +96,7 @@ detailed in de Winter et al., 2020 (Climate of the Past).
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation
 in biogenic aragonite: temperature effects, \emph{Chemical Geology} \strong{1986},
 \emph{59.1}, 59–74.
-\url{http://doi.org/bvpzws}
+\url{https://doi.org/bvpzws}
 
 Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 isotope effects in synthetic carbonates, \emph{Geochimica et Cosmochimica Acta}

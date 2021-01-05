@@ -97,7 +97,7 @@ newdata <- carbmodel(Ty, SST, GR, d18Osw, D, AV = TRUE)
 function dependencies: subsample, subsample_mean
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 aragonite: temperature effects, \emph{Chemical Geology} \strong{1986}, \emph{59.1}, 59–74.
-\url{http://doi.org/bvpzws}
+\url{https://doi.org/bvpzws}
 
 Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 isotope effects in synthetic carbonates, \emph{Geochimica et Cosmochimica Acta}

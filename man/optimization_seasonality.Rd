@@ -38,7 +38,7 @@ single value (constant uncertainty) or a vector of length equal to the period
 in SST data (365 days by default) containing information about the error of
 each datapoint (1 standard deviation; default = 0.04 permille).}
 
-\item{N}{Number of datapoints for Monte Carlo simulation (defailts to 1000)}
+\item{N}{Number of datapoints for Monte Carlo simulation (defaults to 1000)}
 
 \item{p}{Threshold value for the p value of separating summer from winter
 reconstructions. Defaults to 0.05 (95\% confidence level)}
@@ -100,7 +100,7 @@ of the Past).
 package dependencies: TTR
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 aragonite: temperature effects, \emph{Chemical Geology} \strong{1986}, \emph{59.1}, 59–74.
-\url{http://doi.org/bvpzws}
+\url{https://doi.org/bvpzws}
 
 Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 isotope effects in synthetic carbonates, \emph{Geochimica et Cosmochimica Acta}

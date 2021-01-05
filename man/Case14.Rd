@@ -60,7 +60,7 @@ Example of natural NAO oscillation:
 Sarafanov, A., On the effect of the North Atlantic Oscillation on temperature
 and salinity of the subpolar North Atlantic intermediate and deep waters
 \emph{ICES Journal of Marine Science} \strong{2009}, \emph{66.7}, 1448–1454.
-\url{http://dx.doi.org/10.1093/icesjms/fsp094}
+\doi{10.1093/icesjms/fsp094}
 }
 \usage{
 Case14
@@ -69,7 +69,7 @@ Case14
 A dataset containing ages (\code{Tnew}), depth values (\code{D}), stable
 oxygen isotope values (\eqn{\delta^{18}O}{δ18O}) and clumped isotope values
 \eqn{\Delta_{47}}{Δ47} of a simulated carbonate record based on environmental
-parameters following Case 14 and emplying a sampling resolution of
+parameters following Case 14 and employing a sampling resolution of
 \code{0.1 mm}, \code{0.2 mm}, \code{0.45 mm}, \code{0.75 mm}, \code{1.55 mm}
 and \code{3.25 mm}.
 }
