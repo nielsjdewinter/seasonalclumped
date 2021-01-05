@@ -1,5 +1,7 @@
 ## New Submission
-This is a new submission of the seasonalclumped package
+This is a resubmission. In this version I have made the following changes:
+* updated URLs and DOIs and corrected typos
+* Reknitted manual files using roxygen2
 
 ## Test environments
 * local Win 10 Pro install, R 4.0.2
@@ -15,7 +17,7 @@ There were no ERRORs, WARNINGSs or NOTEs
 ## R-hub Builder results
 There were no ERRORs or WARNINGs.
 
-There were 2 NOTES:
+There were 1 NOTE:
 
 * Possibly mis-spelled words in DESCRIPTION:
     al (14:16)
@@ -25,18 +27,6 @@ There were 2 NOTES:
 
   These are parts of academic citations and cannot be replaced
   All remaining spelling mistakes flagged by "devtools::spell_check()" are jargon or names
-
-* Found the following (possibly) invalid URLs:
-  URL: http://doi.org/bvpzws (moved to https://doi.org/10.1016/0168-9622(86)90057-6)
-    From: man/binning_seasonality.Rd
-          man/carbmodel.Rd
-          man/optimization_seasonality.Rd
-          man/oxygen_isotope_seasonality.Rd
-          man/smoothing_seasonality.Rd
-    Status: 200
-    Message: OK
-
-  Checked this short DOI and it is valid and links to the correct reference.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package
