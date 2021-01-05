@@ -66,5 +66,5 @@
 #' Sarafanov, A., On the effect of the North Atlantic Oscillation on temperature
 #' and salinity of the subpolar North Atlantic intermediate and deep waters
 #' _ICES Journal of Marine Science_ **2009**, _66.7_, 1448–1454.
-#' \url{http://dx.doi.org/10.1093/icesjms/fsp094}
+#' \doi{10.1093/icesjms/fsp094}
 "Case14"

@@ -29,7 +29,7 @@
 #' @references Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation
 #' in biogenic aragonite: temperature effects, _Chemical Geology_ **1986**,
 #' _59.1_, 59–74.
-#'     \url{http://doi.org/bvpzws}
+#'     \url{https://doi.org/bvpzws}
 #'
 #' Kim, S., O'Niel, J.R., Equilibrium and nonequilibrium oxygen
 #' isotope effects in synthetic carbonates, _Geochimica et Cosmochimica Acta_
