@@ -39,7 +39,8 @@
 #' \code{"d18Oc"}): Vector listing \eqn{\delta^{18}O_{c}}{δ18Oc} values for each
 #' sample
 #' \code{"D47"}): Vector listing \eqn{\Delta_{47}}{Δ47} values for each sample
-#' @references function dependencies: subsample, subsample_mean
+#' @references package dependencies: ggplot2, gridExtra
+#' function dependencies: subsample, subsample_mean
 #' Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 #' aragonite: temperature effects, _Chemical Geology_ **1986**, _59.1_, 59–74.
 #'     \url{https://doi.org/bvpzws}
@@ -135,22 +136,27 @@ carbmodel<-function(time,
     }else if(d18O_fun == "GrossmanKu86"){
         d18Oc <- (20.6 - SSTnew) / 4.34 + d18Ow + 0.2 # Use Grossmann and Ku (1986) modified by Dettmann et al. (1999)
     }else{
-        return("ERROR: Supplied d18Oc transfer function is not recognized")
+        stop("ERROR: Supplied d18Oc transfer function is not recognized")
     }
     if(D47_fun == "Bernasconi18"){
         D47 <- (0.0449 * 10 ^ 6) / (SSTnew + 273.15) ^ 2 + 0.167 # Calculate D47 of calcite for each sample according to Kele et al., 2015 modified by Bernasconi et al., 2018
     }else if(D47_fun == "Jautzy20"){
         D47 <- (0.0433 * 10 ^ 6) / (SSTnew + 273.15) ^ 2 + 0.119 + 0.066 # Calculate D47 of calcite for each sample according to Jautzy et al., 2020 brought into 25 degrees CDES reference frame using 70–25 acid fractionation factor by Petersen et al., 2019
     }else{
-        return("ERROR: Supplied D47 transfer function is not recognized")
+        stop("ERROR: Supplied D47 transfer function is not recognized")
     }
     if(plot == TRUE){ # Create plots of new data if requested
-        plot(D, d18Oc, col = "blue")
-        graphics::lines(D, d18Oc, col = "blue")
-        graphics::par(new = TRUE)
-        plot(D, D47, axes = FALSE, bty = "n", xlab = "", ylab = "", col = "red")
-        graphics::lines(D, D47, bty = "n", xlab = "", ylab = "", col = "red")
-        graphics::axis(side = 4, at = pretty(range(D47)))
+        df <- data.frame(D = D,
+            d18Oc = d18Oc,
+            D47 = D47)
+        d18Oplot <- ggplot2::ggplot(df, ggplot2::aes(D, d18Oc)) +
+            ggplot2::geom_point(col = "blue") +
+            ggplot2::geom_line(col = "blue")
+        D47plot <- ggplot2::ggplot(df, ggplot2::aes(D, D47)) +
+            ggplot2::geom_point(col = "red") +
+            ggplot2::geom_line(col = "red")
+        combinedplot <- gridExtra::grid.arrange(d18Oplot, D47plot, ncol = 1)
+        graphics::plot(combinedplot)
     }
     dat<-cbind(Tnew, D, d18Oc, D47) # Combine new data for export
     return(dat) # Return the new depth, d18Oc and D47 series

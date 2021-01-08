@@ -51,18 +51,19 @@
 #' **2020**, 1–52.
 #'     \url{https://doi.org/fpc4}
 #' @examples
-#' \donttest{
-#'     # find attached dummy data
-#'     Case1 <- seasonalclumped::Case1
-#'     d18Oc <- Case1[, 29]
-#'     ages <- Case1[, 27]
-#'     # Run function
-#'     monthly <- optimization_seasonality(d18Oc,
-#'     ages,
-#'     0.1,
-#'     "KimONeil97",
-#'     FALSE)
-#'     }
+#' # find attached dummy data
+#' Case1 <- seasonalclumped::Case1
+#' d18Oc <- Case1[, 29]
+#' d18Oc <- d18Oc[-which(is.na(d18Oc))]
+#' ages <- Case1[, 27]
+#' ages <- ages[-which(is.na(ages))]
+#' # Run function
+#' monthly <- oxygen_isotope_seasonality(d18Oc,
+#' ages,
+#' 0.1,
+#' 0,
+#' "KimONeil97",
+#' FALSE)
 #' @export
 oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data 
     ages, # Vector containing ages for of all samples in years relative to the shell chronology
@@ -75,7 +76,7 @@ oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc da
     # Prepare data
     # Check if data has equal length
     if(length(d18Oc) != length(ages)){
-        return("ERROR: Vectors 'd18Oc' and 'ages' should have equal length")
+        stop("ERROR: Vectors 'd18Oc' and 'ages' should have equal length")
     }
     if(length(SD_d18Oc) == 1){
         SD_d18Oc <- rep(SD_d18Oc, length(d18Oc)) # Duplicate SD of d18Oc error through entire record length if only a single value is given (constant uncertainty)
@@ -100,7 +101,7 @@ oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc da
     d18Oc_monthly$d18Oc_SE <- d18Oc_monthly$d18Oc_SDtot / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
 
     # Calculate monthly statistics of all d18Ow values
-    cat("Grouping d18Oc data into monthly bins: ", "\r")
+    cat("Grouping d18Ow data into monthly bins: ", "\r")
     d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(d18Ow[which(resultmat$month == x)]), 1),
         d18Ow_median = vapply(1:12, function(x) stats::median(d18Ow[which(resultmat$month == x)]), 1),
         d18Ow_SD = vapply(1:12, function(x) stats::sd(d18Ow[which(resultmat$month == x)]), 1)
@@ -108,7 +109,7 @@ oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc da
     d18Ow_monthly$d18Oc_SE <- d18Ow_monthly$d18Ow_SD / sqrt(vapply(1:12, function(x) length(d18Ow[which(resultmat$month == x)]), 1))
 
     # Calculate monthly statistics of all temperature reconstructions
-    cat("Grouping d18Oc data into monthly bins: ", "\r")
+    cat("Grouping temperature data into monthly bins: ", "\r")
     if(d18O_fun == "KimONeil97"){ # Use transfer function by Kim and O'Neil (1997)
         T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1),
             T_median = vapply(1:12, function(x) stats::median(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1),

@@ -6,6 +6,12 @@
 \usage{
 lhs \%>\% rhs
 }
+\arguments{
+\item{...}{No parameters, used as pipe operator}
+}
+\value{
+No return value, called for side effects
+}
 \description{
 See \code{magrittr::\link[magrittr:pipe]{\%>\%}} for details.
 }

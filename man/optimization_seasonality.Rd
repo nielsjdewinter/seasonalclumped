@@ -73,28 +73,26 @@ sample size optimization method detailed in de Winter et al., 2020 (Climate
 of the Past).
 }
 \examples{
-\donttest{
-    # find attached dummy data
-    Case1 <- seasonalclumped::Case1
-    d18Oc <- Case1[, 29]
-    d18Oc <- d18Oc[-which(is.na(d18Oc))]
-    D47 <- Case1[, 30]
-    D47 <- D47[-which(is.na(D47))]
-    ages <- Case1[, 27]
-    ages <- ages[-which(is.na(ages))]
-    # Run function
-    monthly <- optimization_seasonality(d18Oc = d18Oc,
-    D47 = D47,
-    ages = ages,
-    SD_d18Oc = 0.1,
-    SD_D47 = 0.04,
-    N = 1000,
-    p = 0.05,
-    d18O_fun = "KimONeil97",
-    D47_fun = "Bernasconi18",
-    export = FALSE,
-    export_raw = FALSE)
-    }
+# find attached dummy data
+Case1 <- seasonalclumped::Case1
+d18Oc <- Case1[, 29]
+d18Oc <- d18Oc[-which(is.na(d18Oc))]
+D47 <- Case1[, 30]
+D47 <- D47[-which(is.na(D47))]
+ages <- Case1[, 27]
+ages <- ages[-which(is.na(ages))]
+# Run function
+monthly <- optimization_seasonality(d18Oc = d18Oc,
+D47 = D47,
+ages = ages,
+SD_d18Oc = 0.1,
+SD_D47 = 0.04,
+N = 100, # Use small amount of samples for quick testing (recommended N = 1000)
+p = 0.05,
+d18O_fun = "KimONeil97",
+D47_fun = "Bernasconi18",
+export = FALSE,
+export_raw = FALSE)
 }
 \references{
 package dependencies: TTR

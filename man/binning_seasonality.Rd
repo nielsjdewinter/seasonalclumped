@@ -70,27 +70,25 @@ composition of the precipitation fluid), using the monthly binning method
 detailed in de Winter et al., 2020 (Climate of the Past).
 }
 \examples{
-\donttest{
-    # find attached dummy data
-    Case1 <- seasonalclumped::Case1
-    d18Oc <- Case1[, 29]
-    d18Oc <- d18Oc[-which(is.na(d18Oc))]
-    D47 <- Case1[, 30]
-    D47 <- D47[-which(is.na(D47))]
-    ages <- Case1[, 27]
-    ages <- ages[-which(is.na(ages))]
-    # Run function
-    binned <- binning_seasonality(d18Oc,
-    D47,
-    ages,
-    0.1,
-    0.04,
-    1000,
-    "month",
-    "KimONeil97",
-    "Bernasconi18",
-    FALSE)
-    }
+# find attached dummy data
+Case1 <- seasonalclumped::Case1
+d18Oc <- Case1[, 29]
+d18Oc <- d18Oc[-which(is.na(d18Oc))]
+D47 <- Case1[, 30]
+D47 <- D47[-which(is.na(D47))]
+ages <- Case1[, 27]
+ages <- ages[-which(is.na(ages))]
+# Run function
+binned <- binning_seasonality(d18Oc,
+D47,
+ages,
+0.1,
+0.04,
+100, # Use small amount of samples for quick testing (recommended N = 1000)
+"month",
+"KimONeil97",
+"Bernasconi18",
+FALSE)
 }
 \references{
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation

@@ -95,28 +95,26 @@
 #' **2020**, 1–52.
 #'     \url{https://doi.org/fpc4}
 #' @examples
-#' \donttest{
-#'     # find attached dummy data
-#'     Case1 <- seasonalclumped::Case1
-#'     d18Oc <- Case1[, 29]
-#'     d18Oc <- d18Oc[-which(is.na(d18Oc))]
-#'     D47 <- Case1[, 30]
-#'     D47 <- D47[-which(is.na(D47))]
-#'     ages <- Case1[, 27]
-#'     ages <- ages[-which(is.na(ages))]
-#'     # Run function
-#'     monthly <- optimization_seasonality(d18Oc = d18Oc,
-#'     D47 = D47,
-#'     ages = ages,
-#'     SD_d18Oc = 0.1,
-#'     SD_D47 = 0.04,
-#'     N = 1000,
-#'     p = 0.05,
-#'     d18O_fun = "KimONeil97",
-#'     D47_fun = "Bernasconi18",
-#'     export = FALSE,
-#'     export_raw = FALSE)
-#'     }
+#' # find attached dummy data
+#' Case1 <- seasonalclumped::Case1
+#' d18Oc <- Case1[, 29]
+#' d18Oc <- d18Oc[-which(is.na(d18Oc))]
+#' D47 <- Case1[, 30]
+#' D47 <- D47[-which(is.na(D47))]
+#' ages <- Case1[, 27]
+#' ages <- ages[-which(is.na(ages))]
+#' # Run function
+#' monthly <- optimization_seasonality(d18Oc = d18Oc,
+#' D47 = D47,
+#' ages = ages,
+#' SD_d18Oc = 0.1,
+#' SD_D47 = 0.04,
+#' N = 100, # Use small amount of samples for quick testing (recommended N = 1000)
+#' p = 0.05,
+#' d18O_fun = "KimONeil97",
+#' D47_fun = "Bernasconi18",
+#' export = FALSE,
+#' export_raw = FALSE)
 #' @export
 optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data 
     D47, # Sub–annually resolved D47 data
@@ -134,7 +132,7 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     # Prepare data
     # Check if data has equal length
     if(length(unique(c(length(d18Oc), length(D47), length(ages)))) > 1){
-        return("ERROR: Vectors 'd18Oc', 'D47' and 'ages' should have equal length")
+        stop("ERROR: Vectors 'd18Oc', 'D47' and 'ages' should have equal length")
     }
     Popt <- matrix(NA, ncol = 5, nrow = N * length(d18Oc)) # Create matrix with maximum length
     colnames(Popt) <- c("Samplesize",
@@ -204,7 +202,7 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
         Popt$Tsum <- sqrt((0.0433 * 10 ^ 6) / (Popt$Dsum - 0.119 - 0.066)) - 273.15 # Calculate summer and inter temperatures for each successful simulation according to Jautzy et al., 2020 brought into 25 degrees CDES reference frame using 70-25 acid fractionation factor by Petersen et al., 2019
         Popt$Twin <- sqrt((0.0433 * 10 ^ 6) / (Popt$Dwin - 0.119 - 0.066)) - 273.15
     }else{
-        return("ERROR: Supplied D47 transfer function is not recognized")
+        stop("ERROR: Supplied D47 transfer function is not recognized")
     }
 
     # Add seawater d18O calculations of optimal runs
@@ -215,7 +213,7 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
         Popt$dOwsum <- (Popt$Tsum - 20.6) / 4.34 + Popt$dOsum - 0.2 # Calculate d18O of the precipitation fluid (dOw) for summer and winter simulations using Grossmann and Ku (1986) modified by Dettmann et al. (1999)
         Popt$dOwwin <- (Popt$Twin - 20.6) / 4.34 + Popt$dOwin - 0.2
     }else{
-        return("ERROR: Supplied d18Oc transfer function is not recognized")
+        stop("ERROR: Supplied d18Oc transfer function is not recognized")
     }
 
     # Add slopes and intercepts for D47-d18O conversion

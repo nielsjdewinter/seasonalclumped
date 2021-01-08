@@ -50,18 +50,19 @@ corals) to reconstruct monthly variability in temperature and salinity
 the precipitation fluid).
 }
 \examples{
-\donttest{
-    # find attached dummy data
-    Case1 <- seasonalclumped::Case1
-    d18Oc <- Case1[, 29]
-    ages <- Case1[, 27]
-    # Run function
-    monthly <- optimization_seasonality(d18Oc,
-    ages,
-    0.1,
-    "KimONeil97",
-    FALSE)
-    }
+# find attached dummy data
+Case1 <- seasonalclumped::Case1
+d18Oc <- Case1[, 29]
+d18Oc <- d18Oc[-which(is.na(d18Oc))]
+ages <- Case1[, 27]
+ages <- ages[-which(is.na(ages))]
+# Run function
+monthly <- oxygen_isotope_seasonality(d18Oc,
+ages,
+0.1,
+0,
+"KimONeil97",
+FALSE)
 }
 \references{
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation

@@ -94,27 +94,25 @@
 #' **2020**, 1–52.
 #'     \url{https://doi.org/fpc4}
 #' @examples
-#' \donttest{
-#'     # find attached dummy data
-#'     Case1 <- seasonalclumped::Case1
-#'     d18Oc <- Case1[, 29]
-#'     d18Oc <- d18Oc[-which(is.na(d18Oc))]
-#'     D47 <- Case1[, 30]
-#'     D47 <- D47[-which(is.na(D47))]
-#'     ages <- Case1[, 27]
-#'     ages <- ages[-which(is.na(ages))]
-#'     # Run function
-#'     binned <- binning_seasonality(d18Oc,
-#'     D47,
-#'     ages,
-#'     0.1,
-#'     0.04,
-#'     1000,
-#'     "month",
-#'     "KimONeil97",
-#'     "Bernasconi18",
-#'     FALSE)
-#'     }
+#' # find attached dummy data
+#' Case1 <- seasonalclumped::Case1
+#' d18Oc <- Case1[, 29]
+#' d18Oc <- d18Oc[-which(is.na(d18Oc))]
+#' D47 <- Case1[, 30]
+#' D47 <- D47[-which(is.na(D47))]
+#' ages <- Case1[, 27]
+#' ages <- ages[-which(is.na(ages))]
+#' # Run function
+#' binned <- binning_seasonality(d18Oc,
+#' D47,
+#' ages,
+#' 0.1,
+#' 0.04,
+#' 100, # Use small amount of samples for quick testing (recommended N = 1000)
+#' "month",
+#' "KimONeil97",
+#' "Bernasconi18",
+#' FALSE)
 #' @export
 binning_seasonality <- function(d18Oc, # Subannually resolved d18Oc data 
     D47, # Subannually resolved D47 data
@@ -131,7 +129,7 @@ binning_seasonality <- function(d18Oc, # Subannually resolved d18Oc data
     # Prepare data
     # Check if data has equal length
     if(length(unique(c(length(d18Oc), length(D47), length(ages)))) > 1){
-        return("ERROR: Vectors 'd18Oc', 'D47' and 'ages' should have equal length")
+        stop("ERROR: Vectors 'd18Oc', 'D47' and 'ages' should have equal length")
     }
     if(length(SD_d18Oc) == 1){
         SD_d18Oc <- rep(SD_d18Oc, length(d18Oc)) # Duplicate SD of d18Oc error through entire record length if only a single value is given (constant uncertainty)

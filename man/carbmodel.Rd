@@ -94,6 +94,7 @@ D <- seq(SR, sum(GR), SR)
 newdata <- carbmodel(Ty, SST, GR, d18Osw, D, AV = TRUE)
 }
 \references{
+package dependencies: ggplot2, gridExtra
 function dependencies: subsample, subsample_mean
 Grossman, E.L., Ku, T., Oxygen and carbon isotope fractionation in biogenic
 aragonite: temperature effects, \emph{Chemical Geology} \strong{1986}, \emph{59.1}, 59–74.
