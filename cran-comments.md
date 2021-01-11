@@ -1,10 +1,7 @@
 ## New Submission
 This is a resubmission. In this version I have made the following changes:
-* Reduced package title length to below 45 characters
-* Simplified examples to allow execution during check()
-* Removed instances where local parameters were changed
-* Added missing \arguments and \values to Rd files
-* Corrected error in example of oxygen_isotope_seasonality()
+* Replaces cat() and print() statements with message() for easier suppression by
+user
 
 ## Test environments
 * local Win 10 Pro install, R 4.0.2

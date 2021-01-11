@@ -159,7 +159,7 @@ binning_seasonality <- function(d18Oc, # Subannually resolved d18Oc data
     }
 
     # Calculate binned statistics of all d18Oc values
-    cat("Grouping d18Oc data into binned bins: ", "\r")
+    message("Grouping d18Oc data into binned bins ", "\r")
     d18Oc_binned <- data.frame(d18Oc_mean = vapply(bins, function(x) mean(as.matrix(d18Omat[which(resultmat$bin == x), ])), 1),
         d18Oc_median = vapply(bins, function(x) stats::median(as.matrix(d18Omat[which(resultmat$bin == x), ])), 1),
         d18Oc_SD = vapply(bins, function(x) stats::sd(as.matrix(d18Omat[which(resultmat$bin == x), ])), 1)
@@ -167,7 +167,7 @@ binning_seasonality <- function(d18Oc, # Subannually resolved d18Oc data
     d18Oc_binned$d18Oc_SE <- d18Oc_binned$d18Oc_SD / sqrt(vapply(bins, function(x) length(resultmat$d18Oc[which(resultmat$bin == x)]), 1))
 
     # Calculate binned statistics of all D47 values using the d18Oc measurements and the D47-d18Oc slopes of all successful simulations
-    cat("Grouping D47 data into binned bins: ", "\r")
+    message("Grouping D47 data into binned bins ", "\r")
     D47_binned <- data.frame(D47_mean = vapply(bins, function(x) mean(as.matrix(D47mat[which(resultmat$bin == x), ])), 1),
         D47_median = vapply(bins, function(x) stats::median(as.matrix(D47mat[which(resultmat$bin == x), ])), 1),
         D47_SD = vapply(bins, function(x) stats::sd(as.matrix(D47mat[which(resultmat$bin == x), ])), 1)
@@ -175,7 +175,7 @@ binning_seasonality <- function(d18Oc, # Subannually resolved d18Oc data
     D47_binned$D47_SE <- D47_binned$D47_SD / sqrt(vapply(bins, function(x) length(resultmat$D47[which(resultmat$bin == x)]), 1))
     
     # Repeat for binned temperature reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping Temperature data into binned bins: ", "\r")
+    message("Grouping Temperature data into binned bins ", "\r")
     if(D47_fun == "Bernasconi18"){
         T_binned <- data.frame(T_mean = vapply(bins, function(x) mean(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15), 1),
             T_median = vapply(bins, function(x) stats::median(sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 273.15), 1),
@@ -204,7 +204,7 @@ binning_seasonality <- function(d18Oc, # Subannually resolved d18Oc data
     Trev_binned$T_SE = Trev_binned$T_SD / sqrt(vapply(bins, function(x) length(resultmat$d18Oc[which(resultmat$bin == x)]), 1))
 
     # Repeat for binned d18Ow reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping d18Ow data into binned bins: ", "\r")
+    message("Grouping d18Ow data into binned bins ", "\r")
     if(d18O_fun == "KimONeil97"){
         if(D47_fun == "Bernasconi18"){
             d18Ow_binned <- data.frame(d18Ow_mean = vapply(bins, function(x) mean(((as.matrix(d18Omat[which(resultmat$bin == x), ]) / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (as.matrix(D47mat[which(resultmat$bin == x), ]) - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),

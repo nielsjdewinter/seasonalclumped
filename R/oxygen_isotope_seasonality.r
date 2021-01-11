@@ -91,7 +91,7 @@ oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc da
     )
 
     # Calculate monthly statistics of all d18Oc values
-    cat("Grouping d18Oc data into monthly bins: ", "\r")
+    message("Grouping d18Oc data into monthly bins ", "\r")
     d18Oc_monthly <- data.frame(d18Oc_mean = vapply(1:12, function(x) mean(resultmat$d18Oc[which(resultmat$month == x)]), 1),
         d18Oc_median = vapply(1:12, function(x) stats::median(resultmat$d18Oc[which(resultmat$month == x)]), 1),
         d18Oc_SD = vapply(1:12, function(x) stats::sd(resultmat$d18Oc[which(resultmat$month == x)]), 1),
@@ -101,7 +101,7 @@ oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc da
     d18Oc_monthly$d18Oc_SE <- d18Oc_monthly$d18Oc_SDtot / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
 
     # Calculate monthly statistics of all d18Ow values
-    cat("Grouping d18Ow data into monthly bins: ", "\r")
+    message("Grouping d18Ow data into monthly bins ", "\r")
     d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(d18Ow[which(resultmat$month == x)]), 1),
         d18Ow_median = vapply(1:12, function(x) stats::median(d18Ow[which(resultmat$month == x)]), 1),
         d18Ow_SD = vapply(1:12, function(x) stats::sd(d18Ow[which(resultmat$month == x)]), 1)
@@ -109,7 +109,7 @@ oxygen_isotope_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc da
     d18Ow_monthly$d18Oc_SE <- d18Ow_monthly$d18Ow_SD / sqrt(vapply(1:12, function(x) length(d18Ow[which(resultmat$month == x)]), 1))
 
     # Calculate monthly statistics of all temperature reconstructions
-    cat("Grouping temperature data into monthly bins: ", "\r")
+    message("Grouping temperature data into monthly bins ", "\r")
     if(d18O_fun == "KimONeil97"){ # Use transfer function by Kim and O'Neil (1997)
         T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1),
             T_median = vapply(1:12, function(x) stats::median(18.03 * 10 ^ 3 / (log((resultmat$d18Oc[which(resultmat$month == x)] - (0.97002 * d18Ow[which(resultmat$month == x)] - 29.98)) / 1000 + 1) * 1000 + 32.42) - 273.15), 1),

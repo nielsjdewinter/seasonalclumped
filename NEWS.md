@@ -1,4 +1,8 @@
-# seasonalclumped 0.3.1
+# seasonalclumped 0.3.2
+
+## 0.3.2
+Replaces cat() and print() statements with message() for easier suppression by
+user
 
 ## 0.3.1
 * Reduced package title length

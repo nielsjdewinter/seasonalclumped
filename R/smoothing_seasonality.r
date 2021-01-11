@@ -170,11 +170,8 @@ smoothing_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
         reconD <- as.data.frame(matrix(NA, ncol = N, nrow = length(ages))) # Create matrix for D47 results
         colnames(recond) <- colnames(reconD) <- paste("Sim", seq(1, N, 1), sep = "")
 
+        message("Optimizing moving average iteration ", "\r")
         for(i in 1:N){
-            # Progress
-            cat(paste("Optimizing moving average iteration: ",i),"\r")
-            utils::flush.console()
-
             Dwin <- vapply(win, function(x) max(TTR::runMean(D47mat[, i], x), na.rm = TRUE), 1) # Find highest D47 values (winter)
             Dsum <- vapply(win, function(x) min(TTR::runMean(D47mat[, i], x), na.rm = TRUE), 1) # Find lowest D47 values (summer)
             dwin <- vapply(win, function(x) max(TTR::runMean(d18Omat[, i], x), na.rm = TRUE), 1) # Find highest d18O values (winter)
@@ -220,7 +217,7 @@ smoothing_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     month <- ceiling((ages %% 1) * 12)
 
     # Calculate monthly statistics of all d18Oc values
-    cat("Grouping d18Oc data into monthly bins: ", "\r")
+    message("Grouping d18Oc data into monthly bins ", "\r")
     utils::flush.console()
     d18Oc_monthly <- data.frame(d18Oc_mean = vapply(1:12, function(x) mean(as.matrix(recond[which(month == x), ]), na.rm = TRUE), 1),
         d18Oc_median = vapply(1:12, function(x) stats::median(as.matrix(recond[which(month == x), ]), na.rm = TRUE), 1),
@@ -229,7 +226,7 @@ smoothing_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     d18Oc_monthly$d18Oc_SE <- d18Oc_monthly$d18Oc_SD / sqrt(vapply(1:12, function(x) length(as.matrix(recond[which(month == x), 1])), 1))
 
     # Calculate monthly statistics of all D47 values using the d18Oc measurements and the D47–d18Oc slopes of all successful simulations
-    cat("Grouping D47 data into monthly bins: ", "\r")
+    message("Grouping D47 data into monthly bins ", "\r")
     utils::flush.console()
     D47_monthly <- data.frame(D47_mean = vapply(1:12, function(x) mean(as.matrix(reconD[which(month == x), ]), na.rm = TRUE), 1),
         D47_median = vapply(1:12, function(x) stats::median(as.matrix(reconD[which(month == x), ]), na.rm = TRUE), 1),
@@ -238,7 +235,7 @@ smoothing_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     D47_monthly$D47_SE <- D47_monthly$D47_SD / sqrt(vapply(1:12, function(x) length(as.matrix(reconD[which(month == x), 1])), 1))
 
     # Repeat for monthly temperature reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping Temperature data into monthly bins: ", "\r")
+    message("Grouping Temperature data into monthly bins ", "\r")
     utils::flush.console()
     if(D47_fun == "Bernasconi18"){
         T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(sqrt((0.0449 * 10 ^ 6) / (as.matrix(reconD[which(month == x), ]) - 0.167)) - 273.15, na.rm = TRUE), 1),
@@ -254,7 +251,7 @@ smoothing_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     T_monthly$T_SE = T_monthly$T_SD / sqrt(vapply(1:12, function(x) length(as.matrix(reconD[which(month == x), 1])), 1))
 
     # Repeat for monthly d18Ow reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping d18Ow data into monthly bins: ", "\r")
+    message("Grouping d18Ow data into monthly bins ", "\r")
     utils::flush.console()
     if(d18O_fun == "KimONeil97"){
         if(D47_fun == "Bernasconi18"){

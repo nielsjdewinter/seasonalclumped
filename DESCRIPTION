@@ -1,6 +1,6 @@
 Package: seasonalclumped
 Title: Toolbox for Clumped Isotope Seasonality Reconstructions
-Version: 0.3.1
+Version: 0.3.2
 Authors@R: 
     person(given = "Niels",
            family = "de Winter",

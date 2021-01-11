@@ -156,11 +156,8 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     row = 1
     
     # MONTE CARLO SIMULATION
+    message("Sample size optimization Monte Carlo Iteration ", "\r")
     for(i in 1:N){ # Loop through all Monte Carlo simulations
-        # Progress
-        cat(paste("Sample size optimization Monte Carlo Iteration: ", i),"\r")
-        utils::flush.console()
-        
         # Expanding window seasonality and T–test
         # Keep record of summer and winter values for successful sample windows
         # Isolate simulated d18O and D47 data
@@ -231,7 +228,7 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     )
 
     # Calculate monthly statistics of all d18Oc values
-    cat("Grouping d18Oc data into monthly bins: ", "\r")
+    message("Grouping d18Oc data into monthly bins ", "\r")
     d18Oc_monthly <- data.frame(d18Oc_mean = vapply(1:12, function(x) mean(resultmat$d18Oc[which(resultmat$month == x)]), 1),
         d18Oc_median = vapply(1:12, function(x) stats::median(resultmat$d18Oc[which(resultmat$month == x)]), 1),
         d18Oc_SD = vapply(1:12, function(x) stats::sd(resultmat$d18Oc[which(resultmat$month == x)]), 1)
@@ -239,7 +236,7 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     d18Oc_monthly$d18Oc_SE <- d18Oc_monthly$d18Oc_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
 
     # Calculate monthly statistics of all D47 values using the d18Oc measurements and the D47–d18Oc slopes of all successful simulations
-    cat("Grouping D47 data into monthly bins: ", "\r")
+    message("Grouping D47 data into monthly bins ", "\r")
     D47_monthly <- data.frame(D47_mean = vapply(1:12, function(x) mean(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1),
         D47_median = vapply(1:12, function(x) stats::median(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1),
         D47_SD = vapply(1:12, function(x) stats::sd(outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int), 1)
@@ -247,7 +244,7 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     D47_monthly$D47_SE = D47_monthly$D47_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
 
     # Repeat for monthly temperature reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping Temperature data into monthly bins: ", "\r")
+    message("Grouping Temperature data into monthly bins ", "\r")
     if(D47_fun == "Bernasconi18"){
         T_monthly <- data.frame(T_mean = vapply(1:12, function(x) mean(sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 273.15), 1),
             T_median = vapply(1:12, function(x) stats::median(sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 273.15), 1),
@@ -262,7 +259,7 @@ optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data
     T_monthly$T_SE = T_monthly$T_SD / sqrt(vapply(1:12, function(x) length(resultmat$d18Oc[which(resultmat$month == x)]), 1))
 
     # Repeat for monthly d18Ow reconstructions by calculating temperatures for each combination before averaging
-    cat("Grouping d18Ow data into monthly bins: ", "\r")
+    message("Grouping d18Ow data into monthly bins ", "\r")
     if(d18O_fun == "KimONeil97"){
         if(D47_fun == "Bernasconi18"){
             d18Ow_monthly <- data.frame(d18Ow_mean = vapply(1:12, function(x) mean(((resultmat$d18Oc[which(resultmat$month == x)] / 1000 + 1) / exp(((18.03 * 10 ^ 3) / sqrt((0.0449 * 10 ^ 6) / (outer(resultmat$d18Oc[which(resultmat$month == x)], Popt$D_dO_slope) + Popt$D_dO_int - 0.167)) - 32.42) / 1000) - 1) * 1000 * 1.03092 + 30.92), 1),
