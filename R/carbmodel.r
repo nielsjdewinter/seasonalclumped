@@ -134,7 +134,7 @@ carbmodel<-function(time,
         d18Ow_PDB = (0.97002 * d18Ownew - 29.98) # Convert d18Ow to PDB (following Brand et al., 2014)
         d18Oc = ((alpha * (d18Ow_PDB / 1000 + 1)) - 1) * 1000 # Calculate d18O of calcite for each sample according to Kim and O'Neil, 1997
     }else if(d18O_fun == "GrossmanKu86"){
-        d18Oc <- (20.6 - SSTnew) / 4.34 + d18Ow + 0.2 # Use Grossmann and Ku (1986) modified by Dettmann et al. (1999)
+        d18Oc <- (20.6 - SSTnew) / 4.34 + d18Ownew + 0.2 # Use Grossmann and Ku (1986) modified by Dettmann et al. (1999)
     }else{
         stop("ERROR: Supplied d18Oc transfer function is not recognized")
     }
