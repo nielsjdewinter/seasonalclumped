@@ -109,7 +109,7 @@
 #' ages <- Case1[, 27]
 #' ages <- ages[-which(is.na(ages))]
 #' # Run function
-#' monthly <- optimization_seasonality(d18Oc = d18Oc,
+#' monthly <- optimization_seasonality2(d18Oc = d18Oc,
 #' D47 = D47,
 #' ages = ages,
 #' SD_d18Oc = 0.1,
@@ -121,7 +121,7 @@
 #' export = FALSE,
 #' export_raw = FALSE)
 #' @export
-optimization_seasonality <- function(d18Oc, # Sub–annually resolved d18Oc data 
+optimization_seasonality2 <- function(d18Oc, # Sub–annually resolved d18Oc data 
     D47, # Sub–annually resolved D47 data
     ages, # Vector containing ages for of all samples in years relative to the shell chronology
     SD_d18Oc = 0.1, # Error (1 SD) on d18Oc data 
