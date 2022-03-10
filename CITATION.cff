@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the following scientific paper."
+authors:
+- family-names: "de Winter"
+  given-names: "Niels Jonathan"  
+  orcid: "https://orcid.org/0000-0002-1453-5407"
+- family-names: "Agterhuis"
+  given-names: "Tobias"
+  orcid: "https://orcid.org/0000-0001-6280-5443"
+- family-names: "Ziegler"
+  given-names: "Martin"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "seasonalclumped"
+version: 1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2022-01-28
+url: "https://github.com/nielsjdewinter/seasonalclumped"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "de Winter"
+  given-names: "Niels Jonathan"  
+  orcid: "https://orcid.org/0000-0002-1453-5407"
+  - family-names: "Agterhuis"
+  given-names: "Tobias"
+  orcid: "https://orcid.org/0000-0001-6280-5443"
+  - family-names: "Ziegler"
+  given-names: "Martin"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+  doi: "10.5194/cp-17-1315-2021"
+  journal: "Climate of the Past"
+  month: 6
+  start: 1315 # First page number
+  end: 1340 # Last page number
+  title: "Optimizing sampling strategies in high-resolution paleoclimate records"
+  issue: 3
+  volume: 17
+  year: 2021
